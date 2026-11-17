@@ -1,100 +1,151 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN" data-theme="light">
 <head>
+  
   <meta charset="utf-8">
-  
-  
-  <title>Hello World | Starry&#39;s blog</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="https://starryheihei.github.io/2026/11/17/hello-world/index.html">
-<meta property="og:site_name" content="Starry&#39;s blog">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
-<meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2026-11-17T11:12:58.853Z">
-<meta property="article:modified_time" content="2026-11-17T11:12:58.853Z">
-<meta property="article:author" content="Starryheihei">
-<meta name="twitter:card" content="summary">
-  
-    <link rel="alternate" href="/atom.xml" title="Starry's blog" type="application/atom+xml">
-  
-  
-    <link rel="shortcut icon" href="/favicon.png">
-  
-  
-  
-<link rel="stylesheet" href="/css/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hello World · Starry&#39;s blog</title>
+  <meta name="description" content="Welcome to Hexo ! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troublesh">
+  <meta name="keywords" content="Starry,Starryheihei,Hexo,博客,星光,记忆">
+  <meta name="author" content="Starryheihei">
+  <meta name="theme-color" content="#fff8f7" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#17121c" media="(prefers-color-scheme: dark)">
+  <link rel="canonical" href="https://starryheihei.github.io/2026/11/17/hello-world/">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Hello World · Starry&#39;s blog">
+  <meta property="og:description" content="Welcome to Hexo ! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troublesh">
+  <meta property="og:url" content="https://starryheihei.github.io/2026/11/17/hello-world/">
+  <meta property="og:site_name" content="Starry&#39;s blog">
+  <meta property="og:image" content="https://starryheihei.github.io/images/avatar.svg">
+  <meta name="twitter:card" content="summary">
 
   
+  <link rel="icon" href="/images/favicon.svg">
+  <link rel="apple-touch-icon" href="/images/favicon.svg">
+  
+  
+  <link rel="alternate" type="application/atom+xml" title="Starry&#39;s blog" href="/atom.xml">
+  
+
+  <script>
+    (function () {
+      try {
+        var key = 'cyrene-theme';
+        var stored = localStorage.getItem(key);
+        var fallback = false;
+        var dark = stored ? stored === 'dark' : (fallback || window.matchMedia('(prefers-color-scheme: dark)').matches);
+        document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+      } catch (e) {}
+    })();
+  </script>
+
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    :root {
+      --accent: #e879a6;
+      --accent-alt: #a98bd8;
+      --radius: 22px;
+      --font-size-base: 16px;
+    }
+    body { font-size: var(--font-size-base); }
     
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
-
+  </style>
   
-  
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css">
 
 <meta name="generator" content="Hexo 8.1.2"></head>
+<body class="is-post">
+  <a class="skip-link" href="#main">跳到正文</a>
+  <div class="bg-aurora" aria-hidden="true"></div>
+  <div class="bg-stars" id="bg-stars" aria-hidden="true"></div>
+  <div class="bg-petals" id="bg-petals" aria-hidden="true"></div>
+  <div class="cursor-glow" id="cursor-glow" aria-hidden="true"></div>
 
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">Starry&#39;s blog</a>
-      </h1>
+  <header class="site-header" id="site-header">
+  <div class="header-inner">
+    <a class="brand" href="/" aria-label="Starry&#39;s blog">
+      <span class="brand-mark" aria-hidden="true">♪</span>
+      <span class="brand-text">Starry&#39;s blog</span>
+    </a>
+
+    <nav class="site-nav" id="site-nav" aria-label="菜单">
       
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-        
-          <a class="nav-icon" href="/atom.xml" title="RSS 订阅"><span class="fa fa-rss"></span></a>
-        
-        <a class="nav-icon nav-search-btn" title="搜索"><span class="fa fa-search"></span></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://starryheihei.github.io"></form>
-      </div>
+      <a class="nav-link " href="/">首页</a>
+      
+      <a class="nav-link " href="/archives/">归档</a>
+      
+      <a class="nav-link " href="/categories/">分类</a>
+      
+      <a class="nav-link " href="/tags/">标签</a>
+      
+      <a class="nav-link " href="/about/">关于</a>
+      
+    </nav>
+
+    <div class="header-actions">
+      
+      <a class="icon-btn" href="/search/" aria-label="搜索" title="搜索">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.6-3.6"></path>
+        </svg>
+      </a>
+      
+      
+      <button class="icon-btn theme-toggle" id="theme-toggle" type="button" aria-label="切换到深色" aria-pressed="false">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="4"></circle>
+          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path>
+        </svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path>
+        </svg>
+      </button>
+      
+      <button class="icon-btn nav-toggle" id="nav-toggle" type="button" aria-label="菜单" aria-controls="site-nav" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </div>
 </header>
 
-      <div class="outer">
-        <section id="main"><article id="post-hello-world" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2026/11/17/hello-world/" class="article-date">
-  <time class="dt-published" datetime="2026-11-17T11:12:58.853Z" itemprop="datePublished">2026-11-17</time>
-</a>
+
+  <main class="site-main" id="main">
+    <div class="container">
+      
+<article class="post">
+  <header class="post-header">
     
-  </div>
-  <div class="article-inner">
+    <h1 class="post-title">Hello World</h1>
     
-    
-      <header class="article-header">
-        
+<div class="post-meta">
+  <span class="post-meta-item">
+    <time datetime="2026-11-17T11:12:58.853Z">发表于 2026-11-17</time>
+  </span>
   
-    <h1 class="p-name article-title" itemprop="headline name">
-      Hello World
-    </h1>
+  <span class="meta-dot" aria-hidden="true">·</span>
+  <span class="post-meta-item">1 分钟读完</span>
+  
+  
+  <span class="meta-dot" aria-hidden="true">·</span>
+  <span class="post-meta-item">367 字</span>
+  
+  
+</div>
+
+  </header>
+
   
 
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
+  <div class="post-layout">
+    <div class="post-main">
       
+      <details class="toc-inline">
+        <summary><span class="toc-title"><span aria-hidden="true">♪</span> 目录</span></summary>
+        <nav class="toc-body" data-toc aria-label="目录"></nav>
+      </details>
+      
+
+      <div class="post-content" id="post-content">
         <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
 <h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
 
@@ -109,99 +160,85 @@
 
 <p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
 
+      </div>
+
       
+
+      
+      <aside class="license">
+        <span class="license-icon" aria-hidden="true">©</span>
+        <div class="license-body">
+          <p class="license-title">版权声明</p>
+          <p>本文由 Starryheihei 创作，采用 CC BY-NC-SA 4.0 许可协议。</p>
+          <p class="license-links">
+            <span>作者：Starryheihei</span>
+            <span class="meta-dot" aria-hidden="true">·</span>
+            <span>原文链接：<a href="https://starryheihei.github.io/2026/11/17/hello-world/">https://starryheihei.github.io/2026/11/17/hello-world/</a></span>
+            <span class="meta-dot" aria-hidden="true">·</span>
+            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a>
+          </p>
+        </div>
+      </aside>
+      
+
+      
+      <nav class="post-nav">
+        
+        <a class="post-nav-link post-nav-prev" href="/2026/11/17/Aurora%20CTF%202026%20Writeup%20(%20Share%20)/">
+          <span class="post-nav-label">← 上一篇</span>
+          <span class="post-nav-title"></span>
+        </a>
+        
+        <span class="post-nav-link is-empty"></span>
+      </nav>
+      
+
+      
+
     </div>
-    <footer class="article-footer">
-      <a data-url="https://starryheihei.github.io/2026/11/17/hello-world/" data-id="cuidZjOhiDZ5UGSLkQicxZcT-" data-title="Hello World" class="article-share-link"><span class="fa fa-share">分享</span></a>
-      
-      
-      
-    </footer>
-  </div>
-  
+
     
-  
+    <aside class="post-toc" id="post-toc">
+      <p class="toc-title"><span aria-hidden="true">♪</span> 目录</p>
+      <nav class="toc-body" data-toc aria-label="目录"></nav>
+    </aside>
+    
+  </div>
 </article>
 
-
-</section>
-        
-          <aside id="sidebar">
-  
-    
-
-  
-    
-
-  
-    
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">归档</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/11/">十一月 2026</a></li></ul>
     </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">最新文章</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2026/11/17/hello-world/">Hello World</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
+  </main>
 
   
-</aside>
-        
-      </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-inner">
+      <p class="footer-brand"><span aria-hidden="true">♪</span> Starry&#39;s blog</p>
+      <p class="footer-line">用记忆与 ♪ 写成 · © 2024–2026 Starryheihei</p>
+      <p class="footer-meta">
+        由 Hexo 驱动 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> · 
+        主题 <span class="footer-theme">Cyrene</span>
+         · 共 2 篇记忆
+      </p>
       
-      &copy; 2026 Starryheihei<br>
-      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>
 
-    </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
-    
 
-
-<script src="/js/jquery-3.6.4.min.js"></script>
-
-
+  <div class="reading-progress" id="reading-progress" aria-hidden="true"></div>
+  <button class="back-to-top" id="back-to-top" type="button" aria-label="回到顶端" title="回到顶端">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M12 19V5M5 12l7-7 7 7"/>
+    </svg>
+  </button>
 
   
-<script src="/fancybox/jquery.fancybox.min.js"></script>
+<script>
+  window.CYRENE_CONFIG = {"defaultDark":false,"stars":true,"petals":true,"cursorGlow":false,"lightbox":true,"copyCode":true,"giscus":false,"searchSource":"/search.xml","searchUrl":"/search/","strings":{"toLight":"切换到浅色","toDark":"切换到深色","copy":"复制","copied":"已收进记忆","copyFailed":"复制失败","close":"关闭","preview":"查看大图","searchLoading":"正在翻找记忆……","searchEmpty":"没有找到……要不要换一个词试试？","searchError":"记忆库暂时打不开，请稍后再试。","searchFound":"找到 {count} 条记忆"}};
+</script>
+<script src="/js/cyrene.js" defer></script>
 
 
-
-
-<script src="/js/script.js"></script>
-
-
-
-
-
-  </div>
 </body>
 </html>

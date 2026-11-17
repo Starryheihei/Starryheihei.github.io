@@ -1,207 +1,338 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN" data-theme="light">
 <head>
+  
   <meta charset="utf-8">
-  
-  
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Starry&#39;s blog</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Starry 的小站，用来收留星光、代码和旧时光。">
+  <meta name="keywords" content="Starry,Starryheihei,Hexo,博客,星光,记忆">
+  <meta name="author" content="Starryheihei">
+  <meta name="theme-color" content="#fff8f7" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#17121c" media="(prefers-color-scheme: dark)">
+  <link rel="canonical" href="https://starryheihei.github.io/index.html">
+
   <meta property="og:type" content="website">
-<meta property="og:title" content="Starry&#39;s blog">
-<meta property="og:url" content="https://starryheihei.github.io/index.html">
-<meta property="og:site_name" content="Starry&#39;s blog">
-<meta property="og:locale" content="zh_CN">
-<meta property="article:author" content="Starryheihei">
-<meta name="twitter:card" content="summary">
-  
-    <link rel="alternate" href="/atom.xml" title="Starry's blog" type="application/atom+xml">
-  
-  
-    <link rel="shortcut icon" href="/favicon.png">
-  
-  
-  
-<link rel="stylesheet" href="/css/style.css">
+  <meta property="og:title" content="Starry&#39;s blog">
+  <meta property="og:description" content="Starry 的小站，用来收留星光、代码和旧时光。">
+  <meta property="og:url" content="https://starryheihei.github.io/index.html">
+  <meta property="og:site_name" content="Starry&#39;s blog">
+  <meta property="og:image" content="https://starryheihei.github.io/images/avatar.svg">
+  <meta name="twitter:card" content="summary">
 
   
+  <link rel="icon" href="/images/favicon.svg">
+  <link rel="apple-touch-icon" href="/images/favicon.svg">
+  
+  
+  <link rel="alternate" type="application/atom+xml" title="Starry&#39;s blog" href="/atom.xml">
+  
+
+  <script>
+    (function () {
+      try {
+        var key = 'cyrene-theme';
+        var stored = localStorage.getItem(key);
+        var fallback = false;
+        var dark = stored ? stored === 'dark' : (fallback || window.matchMedia('(prefers-color-scheme: dark)').matches);
+        document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+      } catch (e) {}
+    })();
+  </script>
+
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    :root {
+      --accent: #e879a6;
+      --accent-alt: #a98bd8;
+      --radius: 22px;
+      --font-size-base: 16px;
+    }
+    body { font-size: var(--font-size-base); }
     
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
-
+  </style>
   
-  
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css">
 
 <meta name="generator" content="Hexo 8.1.2"></head>
+<body class="is-home">
+  <a class="skip-link" href="#main">跳到正文</a>
+  <div class="bg-aurora" aria-hidden="true"></div>
+  <div class="bg-stars" id="bg-stars" aria-hidden="true"></div>
+  <div class="bg-petals" id="bg-petals" aria-hidden="true"></div>
+  <div class="cursor-glow" id="cursor-glow" aria-hidden="true"></div>
 
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">Starry&#39;s blog</a>
-      </h1>
+  <header class="site-header" id="site-header">
+  <div class="header-inner">
+    <a class="brand" href="/" aria-label="Starry&#39;s blog">
+      <span class="brand-mark" aria-hidden="true">♪</span>
+      <span class="brand-text">Starry&#39;s blog</span>
+    </a>
+
+    <nav class="site-nav" id="site-nav" aria-label="菜单">
       
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-        
-          <a class="nav-icon" href="/atom.xml" title="RSS 订阅"><span class="fa fa-rss"></span></a>
-        
-        <a class="nav-icon nav-search-btn" title="搜索"><span class="fa fa-search"></span></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://starryheihei.github.io"></form>
-      </div>
+      <a class="nav-link current" href="/">首页</a>
+      
+      <a class="nav-link " href="/archives/">归档</a>
+      
+      <a class="nav-link " href="/categories/">分类</a>
+      
+      <a class="nav-link " href="/tags/">标签</a>
+      
+      <a class="nav-link " href="/about/">关于</a>
+      
+    </nav>
+
+    <div class="header-actions">
+      
+      <a class="icon-btn" href="/search/" aria-label="搜索" title="搜索">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.6-3.6"></path>
+        </svg>
+      </a>
+      
+      
+      <button class="icon-btn theme-toggle" id="theme-toggle" type="button" aria-label="切换到深色" aria-pressed="false">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="4"></circle>
+          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path>
+        </svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path>
+        </svg>
+      </button>
+      
+      <button class="icon-btn nav-toggle" id="nav-toggle" type="button" aria-label="菜单" aria-controls="site-nav" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </div>
 </header>
 
-      <div class="outer">
-        <section id="main">
+
+  <main class="site-main" id="main">
+    <div class="container">
+      
+<section class="banner">
   
-    <article id="post-hello-world" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2026/11/17/hello-world/" class="article-date">
-  <time class="dt-published" datetime="2026-11-17T11:12:58.853Z" itemprop="datePublished">2026-11-17</time>
-</a>
+  <span class="banner-sparkle sparkle-1" aria-hidden="true">✦</span>
+  <span class="banner-sparkle sparkle-2" aria-hidden="true">✧</span>
+  <span class="banner-ornament" aria-hidden="true">♪</span>
+
+  <div class="banner-inner">
+    
+    <div class="banner-avatar">
+      <span class="avatar-ring" aria-hidden="true"></span>
+      <img src="/images/avatar.svg" alt="昔涟" width="112" height="112">
+    </div>
+    
+    <p class="banner-kicker">MEMORY · STARLIGHT · ♪</p>
+    <h1 class="banner-title">昔涟</h1>
+    <p class="banner-subtitle">把每一段记忆，收进故事里♪</p>
+
+    
+    <div class="banner-stats">
+      <span class="stat"><strong>2</strong><em>篇记忆</em></span>
+      <span class="stat-divider" aria-hidden="true"></span>
+      <span class="stat"><strong>0</strong><em>个分类</em></span>
+      <span class="stat-divider" aria-hidden="true"></span>
+      <span class="stat"><strong>0</strong><em>枚标签</em></span>
+    </div>
+    
+
+    
+    <a class="banner-cta" href="#latest">
+      <span>翻开故事</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M12 5v14M5 12l7 7 7-7"/>
+      </svg>
+    </a>
     
   </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2026/11/17/hello-world/">Hello World</a>
-    </h1>
-  
+</section>
 
-      </header>
+
+
+<div class="home-layout">
+  <div class="home-main">
+    <div class="section-heading" id="latest">
+      <h2 class="section-title"><span class="title-mark" aria-hidden="true">♪</span> 最近的故事</h2>
+      <a class="section-more" href="/archives/">全部归档 <span aria-hidden="true">→</span></a>
+    </div>
+
     
-    <div class="e-content article-entry" itemprop="articleBody">
+    
+    <div class="post-list">
       
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
+      
+<article class="post-card">
+  
+  <div class="post-card-body">
+    <div class="post-card-meta">
+      <time datetime="2026-11-17T13:23:49.235Z">2026-11-17</time>
+      <span class="meta-dot" aria-hidden="true">·</span>
+      <span>118 分钟读完</span>
       
     </div>
-    <footer class="article-footer">
-      <a data-url="https://starryheihei.github.io/2026/11/17/hello-world/" data-id="cuidZjOhiDZ5UGSLkQicxZcT-" data-title="Hello World" class="article-share-link"><span class="fa fa-share">分享</span></a>
-      
-      
-      
-    </footer>
+    <h2 class="post-card-title">
+      <a href="/2026/11/17/Aurora%20CTF%202026%20Writeup%20(%20Share%20)/"></a>
+    </h2>
+    
+    <p class="post-card-excerpt">Aurora CTF 2026 Writeup 主选方向：Crypto Crypto [Easy] I | 已完成 考点：古典密码中的Atbash加密方式 Flag：Aurora{Welc0me_7o_th3_Crypt0graphy_N1…</p>
+    
+    <div class="post-card-foot">
+      <div class="post-card-tags">
+        
+      </div>
+      <a class="read-more" href="/2026/11/17/Aurora%20CTF%202026%20Writeup%20(%20Share%20)/">
+        <span>阅读全文</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
   </div>
-  
 </article>
 
-
-
+      
+      
+<article class="post-card">
   
-
-
-</section>
+  <div class="post-card-body">
+    <div class="post-card-meta">
+      <time datetime="2026-11-17T11:12:58.853Z">2026-11-17</time>
+      <span class="meta-dot" aria-hidden="true">·</span>
+      <span>1 分钟读完</span>
+      
+    </div>
+    <h2 class="post-card-title">
+      <a href="/2026/11/17/hello-world/">Hello World</a>
+    </h2>
+    
+    <p class="post-card-excerpt">Welcome to Hexo ! This is your very first post. Check documentation for more info. If you get any problems when using He…</p>
+    
+    <div class="post-card-foot">
+      <div class="post-card-tags">
         
-          <aside id="sidebar">
-  
-    
-
-  
-    
-
-  
-    
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">归档</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/11/">十一月 2026</a></li></ul>
+      </div>
+      <a class="read-more" href="/2026/11/17/hello-world/">
+        <span>阅读全文</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
     </div>
   </div>
+</article>
 
+      
+    </div>
+    
+
+    
+
+
+  </div>
 
   
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">最新文章</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2026/11/17/hello-world/">Hello World</a>
-          </li>
-        
-      </ul>
+  
+<aside class="sidebar">
+  
+  <section class="widget profile-widget">
+    <div class="profile-avatar">
+      <span class="avatar-ring" aria-hidden="true"></span>
+      <img src="/images/avatar.svg" alt="昔涟" width="96" height="96" loading="lazy">
     </div>
-  </div>
+    <h2 class="profile-name">昔涟</h2>
+    <p class="profile-bio">粉头发，尖耳朵。会写诗，也会在句尾悄悄加一个♪</p>
+    
+    <p class="profile-location">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.4"/></svg>
+      <span>翁法罗斯 · 哀丽秘榭</span>
+    </p>
+    
+    
+
+<div class="socials">
+  
+  
+  
+  
+  
+  <a class="social-link" href="/atom.xml" aria-label="RSS" title="RSS">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M5 19a0 0 0 1 0 0"/><path d="M4 11a9 9 0 0 1 9 9M4 4a16 16 0 0 1 16 16"/></svg>
+  </a>
+  
+</div>
+
+
+    <div class="profile-stats">
+      <a class="profile-stat" href="/archives/"><strong>2</strong><span>篇记忆</span></a>
+      <a class="profile-stat" href="/categories/"><strong>0</strong><span>个分类</span></a>
+      <a class="profile-stat" href="/tags/"><strong>0</strong><span>枚标签</span></a>
+    </div>
+  </section>
+  
+
+  
+  <section class="widget">
+    <h3 class="widget-title"><span aria-hidden="true">♪</span> 最近的故事</h3>
+    <ol class="recent-list">
+      
+      <li class="recent-item">
+        <span class="recent-index">01</span>
+        <a class="recent-link" href="/2026/11/17/Aurora%20CTF%202026%20Writeup%20(%20Share%20)/">
+          <span class="recent-title"></span>
+          <time class="recent-date" datetime="2026-11-17T13:23:49.235Z">2026-11-17</time>
+        </a>
+      </li>
+      
+      <li class="recent-item">
+        <span class="recent-index">02</span>
+        <a class="recent-link" href="/2026/11/17/hello-world/">
+          <span class="recent-title">Hello World</span>
+          <time class="recent-date" datetime="2026-11-17T11:12:58.853Z">2026-11-17</time>
+        </a>
+      </li>
+      
+    </ol>
+  </section>
+  
 
   
 </aside>
-        
-      </div>
-      <footer id="footer">
+
   
-  <div class="outer">
-    <div id="footer-info" class="inner">
+</div>
+
+    </div>
+  </main>
+
+  
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-inner">
+      <p class="footer-brand"><span aria-hidden="true">♪</span> Starry&#39;s blog</p>
+      <p class="footer-line">用记忆与 ♪ 写成 · © 2024–2026 Starryheihei</p>
+      <p class="footer-meta">
+        由 Hexo 驱动 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> · 
+        主题 <span class="footer-theme">Cyrene</span>
+         · 共 2 篇记忆
+      </p>
       
-      &copy; 2026 Starryheihei<br>
-      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>
 
-    </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
-    
 
-
-<script src="/js/jquery-3.6.4.min.js"></script>
-
-
+  <div class="reading-progress" id="reading-progress" aria-hidden="true"></div>
+  <button class="back-to-top" id="back-to-top" type="button" aria-label="回到顶端" title="回到顶端">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M12 19V5M5 12l7-7 7 7"/>
+    </svg>
+  </button>
 
   
-<script src="/fancybox/jquery.fancybox.min.js"></script>
+<script>
+  window.CYRENE_CONFIG = {"defaultDark":false,"stars":true,"petals":true,"cursorGlow":false,"lightbox":true,"copyCode":true,"giscus":false,"searchSource":"/search.xml","searchUrl":"/search/","strings":{"toLight":"切换到浅色","toDark":"切换到深色","copy":"复制","copied":"已收进记忆","copyFailed":"复制失败","close":"关闭","preview":"查看大图","searchLoading":"正在翻找记忆……","searchEmpty":"没有找到……要不要换一个词试试？","searchError":"记忆库暂时打不开，请稍后再试。","searchFound":"找到 {count} 条记忆"}};
+</script>
+<script src="/js/cyrene.js" defer></script>
 
 
-
-
-<script src="/js/script.js"></script>
-
-
-
-
-
-  </div>
 </body>
 </html>
