@@ -33,7 +33,7 @@
       try {
         var key = 'cyrene-theme';
         var stored = localStorage.getItem(key);
-        var fallback = false;
+        var fallback = true;
         var dark = stored ? stored === 'dark' : (fallback || window.matchMedia('(prefers-color-scheme: dark)').matches);
         document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
       } catch (e) {}
@@ -50,6 +50,8 @@
     }
     body { font-size: var(--font-size-base); }
     
+    body { --site-bg-image: url('/images/site-bg.jpg'); }
+    
   </style>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.19.1/dist/katex.min.css">
 <style>
@@ -58,7 +60,7 @@
 
 
 <meta name="generator" content="Hexo 8.1.2"></head>
-<body class="is-home">
+<body class="is-home has-site-bg">
   <a class="skip-link" href="#main">跳到正文</a>
   <div class="bg-aurora" aria-hidden="true"></div>
   <div class="bg-stars" id="bg-stars" aria-hidden="true"></div>
@@ -137,9 +139,9 @@
     <div class="banner-stats">
       <span class="stat"><strong>2</strong><em>篇记忆</em></span>
       <span class="stat-divider" aria-hidden="true"></span>
-      <span class="stat"><strong>0</strong><em>个分类</em></span>
+      <span class="stat"><strong>1</strong><em>个分类</em></span>
       <span class="stat-divider" aria-hidden="true"></span>
-      <span class="stat"><strong>0</strong><em>枚标签</em></span>
+      <span class="stat"><strong>3</strong><em>枚标签</em></span>
     </div>
     
 
@@ -172,19 +174,28 @@
   
   <div class="post-card-body">
     <div class="post-card-meta">
-      <time datetime="2026-11-17T13:23:49.235Z">2026-11-17</time>
+      <time datetime="2026-11-17T15:43:00.000Z">2026-11-17</time>
       <span class="meta-dot" aria-hidden="true">·</span>
       <span>124 分钟读完</span>
       
+      <span class="meta-dot" aria-hidden="true">·</span>
+      <a class="post-card-cat" href="/categories/CTF/">CTF</a>
+      
     </div>
     <h2 class="post-card-title">
-      <a href="/2026/11/17/Aurora%20CTF%202026%20Writeup%20(%20Share%20)/"></a>
+      <a href="/2026/11/17/Aurora%20CTF%202026%20Writeup%20(%20Share%20)/">Aurora CTF 2026 Writeup</a>
     </h2>
     
-    <p class="post-card-excerpt">Aurora CTF 2026 Writeup 主选方向：Crypto Crypto [Easy] I | 已完成 考点：古典密码中的Atbash加密方式 Flag：Aurora{Welc0me_7o_th3_Crypt0graphy_N1…</p>
+    <p class="post-card-excerpt">主选方向：Crypto Crypto [Easy] I | 已完成 考点：古典密码中的Atbash加密方式 Flag：Aurora{Welc0me_7o_th3_Crypt0graphy_N1ght} 题目描述 密文是Zfiliz{Dvox…</p>
     
     <div class="post-card-foot">
       <div class="post-card-tags">
+        
+        <a class="tag-pill small" href="/tags/CTF/"># CTF</a>
+        
+        <a class="tag-pill small" href="/tags/Crypto/"># Crypto</a>
+        
+        <a class="tag-pill small" href="/tags/Writeup/"># Writeup</a>
         
       </div>
       <a class="read-more" href="/2026/11/17/Aurora%20CTF%202026%20Writeup%20(%20Share%20)/">
@@ -267,8 +278,8 @@
 
     <div class="profile-stats">
       <a class="profile-stat" href="/archives/"><strong>2</strong><span>篇记忆</span></a>
-      <a class="profile-stat" href="/categories/"><strong>0</strong><span>个分类</span></a>
-      <a class="profile-stat" href="/tags/"><strong>0</strong><span>枚标签</span></a>
+      <a class="profile-stat" href="/categories/"><strong>1</strong><span>个分类</span></a>
+      <a class="profile-stat" href="/tags/"><strong>3</strong><span>枚标签</span></a>
     </div>
   </section>
   
@@ -281,8 +292,8 @@
       <li class="recent-item">
         <span class="recent-index">01</span>
         <a class="recent-link" href="/2026/11/17/Aurora%20CTF%202026%20Writeup%20(%20Share%20)/">
-          <span class="recent-title"></span>
-          <time class="recent-date" datetime="2026-11-17T13:23:49.235Z">2026-11-17</time>
+          <span class="recent-title">Aurora CTF 2026 Writeup</span>
+          <time class="recent-date" datetime="2026-11-17T15:43:00.000Z">2026-11-17</time>
         </a>
       </li>
       
@@ -298,6 +309,19 @@
   </section>
   
 
+  
+  <section class="widget">
+    <h3 class="widget-title"><span aria-hidden="true">✧</span> 标签云</h3>
+    <div class="tag-cloud">
+      
+      <a class="tag-pill" href="/tags/CTF/"># CTF<span class="tag-count">1</span></a>
+      
+      <a class="tag-pill" href="/tags/Crypto/"># Crypto<span class="tag-count">1</span></a>
+      
+      <a class="tag-pill" href="/tags/Writeup/"># Writeup<span class="tag-count">1</span></a>
+      
+    </div>
+  </section>
   
 </aside>
 
@@ -333,7 +357,7 @@
 
   
 <script>
-  window.CYRENE_CONFIG = {"defaultDark":false,"stars":true,"petals":true,"cursorGlow":false,"lightbox":true,"copyCode":true,"giscus":false,"searchSource":"/search.xml","searchUrl":"/search/","strings":{"toLight":"切换到浅色","toDark":"切换到深色","copy":"复制","copied":"已收进记忆","copyFailed":"复制失败","close":"关闭","preview":"查看大图","searchLoading":"正在翻找记忆……","searchEmpty":"没有找到……要不要换一个词试试？","searchError":"记忆库暂时打不开，请稍后再试。","searchFound":"找到 {count} 条记忆"}};
+  window.CYRENE_CONFIG = {"defaultDark":true,"stars":true,"petals":true,"cursorGlow":false,"lightbox":true,"copyCode":true,"giscus":false,"searchSource":"/search.xml","searchUrl":"/search/","strings":{"toLight":"切换到浅色","toDark":"切换到深色","copy":"复制","copied":"已收进记忆","copyFailed":"复制失败","close":"关闭","preview":"查看大图","searchLoading":"正在翻找记忆……","searchEmpty":"没有找到……要不要换一个词试试？","searchError":"记忆库暂时打不开，请稍后再试。","searchFound":"找到 {count} 条记忆"}};
 </script>
 <script src="/js/cyrene.js" defer></script>
 
