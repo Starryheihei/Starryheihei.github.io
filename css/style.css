@@ -3322,7 +3322,294 @@ body.is-post .reading-progress {
   }
 }
 
-/* ---------- 26. Full-page background ---------- */
+/* ---------- 26. Cover hero ---------- */
+.cover {
+  position: relative;
+  left: 50%;
+  width: 100vw;
+  height: clamp(520px, 70vh, 820px);
+  margin-top: calc(-1 * var(--header-h));
+  margin-left: -50vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    radial-gradient(75% 80% at 72% 18%, rgba(193, 83, 139, 0.34), transparent 66%),
+    linear-gradient(135deg, #241528 0%, #130e1a 100%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.cover-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  filter: brightness(0.72) saturate(0.9);
+  transform: scale(1.02);
+}
+
+.cover-shade {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(70% 65% at 50% 42%, rgba(10, 6, 14, 0.22), transparent 72%),
+    linear-gradient(180deg, rgba(10, 6, 14, 0.62) 0%, rgba(10, 6, 14, 0.44) 45%, rgba(10, 6, 14, 0.9) 100%);
+}
+
+.cover-inner {
+  position: relative;
+  z-index: 2;
+  width: min(92%, 900px);
+  padding: calc(var(--header-h) + 54px) 24px 100px;
+  text-align: center;
+}
+
+.cover-title {
+  margin: 0;
+  color: #fff;
+  font-family: "Poppins", "Montserrat", "Century Gothic", "Segoe UI", var(--font-sans);
+  font-size: clamp(2.2rem, 4.2vw, 3.2rem);
+  font-weight: 700;
+  line-height: 1.16;
+  letter-spacing: -0.01em;
+  text-shadow: 0 8px 34px rgba(0, 0, 0, 0.7), 0 2px 10px rgba(0, 0, 0, 0.4);
+}
+
+.cover-subtitle {
+  margin: 18px 0 0;
+  color: rgba(255, 255, 255, 0.84);
+  font-family: var(--font-sans);
+  font-size: clamp(0.95rem, 1.6vw, 1.18rem);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  line-height: 1.8;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.75);
+}
+
+.cover-scroll {
+  position: absolute;
+  left: 50%;
+  bottom: 24px;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  color: rgba(255, 255, 255, 0.72);
+  transform: translateX(-50%);
+}
+
+.cover-scroll-line {
+  width: 1px;
+  height: 26px;
+  background: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.65));
+}
+
+.cover-scroll svg {
+  width: 17px;
+  height: 17px;
+  animation: cover-bounce 1.8s ease-in-out infinite;
+}
+
+body.has-cover .site-header {
+  background: transparent;
+  border-bottom-color: transparent;
+  box-shadow: none;
+}
+
+body.has-cover .site-header .brand,
+body.has-cover .site-header .brand-text,
+body.has-cover .site-header .nav-link,
+body.has-cover .site-header .icon-btn {
+  color: #fff;
+}
+
+body.has-cover .site-header .nav-link:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+body.has-cover .site-header .nav-link.current {
+  color: #fff;
+}
+
+body.has-cover .site-header .nav-link.current::after {
+  background: #fff;
+}
+
+body.has-cover .site-header.is-scrolled {
+  background: rgba(255, 248, 247, 0.9);
+  border-bottom-color: var(--border);
+  box-shadow: 0 12px 32px -24px rgba(120, 60, 90, 0.5);
+}
+
+body.has-cover .site-header.is-scrolled .brand,
+body.has-cover .site-header.is-scrolled .brand-text {
+  color: var(--text);
+}
+
+body.has-cover .site-header.is-scrolled .nav-link {
+  color: var(--text-soft);
+}
+
+body.has-cover .site-header.is-scrolled .nav-link.current,
+body.has-cover .site-header.is-scrolled .nav-link:hover {
+  color: var(--accent);
+}
+
+body.has-cover .site-header.is-scrolled .nav-link.current::after {
+  background: var(--accent);
+}
+
+body.has-cover .site-header.is-scrolled .icon-btn {
+  color: var(--text-soft);
+}
+
+body.has-cover .site-header:not(.is-scrolled) .site-nav.is-open {
+  background: rgba(23, 18, 28, 0.94);
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+body.has-cover .site-header:not(.is-scrolled) .site-nav.is-open .nav-link {
+  color: #f4e7ef;
+}
+
+body.has-cover .site-header:not(.is-scrolled) .site-nav.is-open .nav-link.current {
+  color: var(--accent);
+}
+
+html[data-theme="dark"] body.has-cover .site-header.is-scrolled {
+  background: rgba(23, 18, 28, 0.92);
+}
+
+html[data-theme="dark"] body.has-cover .site-header.is-scrolled .brand,
+html[data-theme="dark"] body.has-cover .site-header.is-scrolled .brand-text,
+html[data-theme="dark"] body.has-cover .site-header.is-scrolled .nav-link,
+html[data-theme="dark"] body.has-cover .site-header.is-scrolled .icon-btn {
+  color: var(--text);
+}
+
+/* Text decode / pinyin entrance */
+.text-anim {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+  vertical-align: top;
+}
+
+.cover-title.text-anim,
+.cover-subtitle.text-anim {
+  display: block;
+}
+
+.text-ghost {
+  visibility: visible;
+}
+
+html.js .text-ghost {
+  visibility: hidden;
+}
+
+.text-live {
+  display: none;
+}
+
+html.js .text-live {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.text-char {
+  display: inline-block;
+  white-space: pre;
+}
+
+.text-char.is-pinyin {
+  font-family: var(--font-mono);
+  font-size: 0.5em;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  opacity: 0.7;
+}
+
+.text-char.is-revealed {
+  animation: char-pop 0.34s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@keyframes char-pop {
+  0% {
+    opacity: 0;
+    transform: translateY(9px) scale(0.86);
+    filter: blur(3px);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(-2px) scale(1.04);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes cover-bounce {
+  0%, 100% {
+    transform: translateY(0);
+    opacity: 0.66;
+  }
+  50% {
+    transform: translateY(6px);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 720px) {
+  .cover {
+    height: clamp(480px, 70vh, 700px);
+  }
+
+  .cover-inner {
+    padding: calc(var(--header-h) + 38px) 18px 84px;
+  }
+
+  .cover-title {
+    font-size: clamp(2rem, 9vw, 3rem);
+  }
+
+  .cover-subtitle {
+    margin-top: 14px;
+    font-size: 0.92rem;
+    letter-spacing: 0.04em;
+  }
+
+  .cover-scroll {
+    bottom: 18px;
+  }
+}
+
+@media (max-width: 520px) {
+  .cover {
+    height: 66vh;
+    min-height: 460px;
+  }
+
+  .cover-title {
+    font-size: 2.1rem;
+  }
+}
+
+/* ---------- 27. Full-page background ---------- */
 body.has-site-bg {
   background-color: #171019;
   background-image:

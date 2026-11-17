@@ -33,7 +33,7 @@
       try {
         var key = 'cyrene-theme';
         var stored = localStorage.getItem(key);
-        var fallback = true;
+        var fallback = false;
         var dark = stored ? stored === 'dark' : (fallback || window.matchMedia('(prefers-color-scheme: dark)').matches);
         document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
       } catch (e) {}
@@ -50,8 +50,6 @@
     }
     body { font-size: var(--font-size-base); }
     
-    body { --site-bg-image: url('/images/site-bg.jpg'); }
-    
   </style>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.19.1/dist/katex.min.css">
 <style>
@@ -60,7 +58,7 @@
 
 
 <meta name="generator" content="Hexo 8.1.2"></head>
-<body class="is-page has-site-bg">
+<body class="is-page">
   <a class="skip-link" href="#main">跳到正文</a>
   <div class="bg-aurora" aria-hidden="true"></div>
   <div class="bg-stars" id="bg-stars" aria-hidden="true"></div>
@@ -187,7 +185,7 @@
 
   
 <script>
-  window.CYRENE_CONFIG = {"defaultDark":true,"stars":true,"petals":true,"cursorGlow":false,"lightbox":true,"copyCode":true,"giscus":false,"searchSource":"/search.xml","searchUrl":"/search/","strings":{"toLight":"切换到浅色","toDark":"切换到深色","copy":"复制","copied":"已收进记忆","copyFailed":"复制失败","close":"关闭","preview":"查看大图","searchLoading":"正在翻找记忆……","searchEmpty":"没有找到……要不要换一个词试试？","searchError":"记忆库暂时打不开，请稍后再试。","searchFound":"找到 {count} 条记忆"}};
+  window.CYRENE_CONFIG = {"defaultDark":false,"stars":true,"petals":true,"cursorGlow":false,"lightbox":true,"copyCode":true,"giscus":false,"searchSource":"/search.xml","searchUrl":"/search/","strings":{"toLight":"切换到浅色","toDark":"切换到深色","copy":"复制","copied":"已收进记忆","copyFailed":"复制失败","close":"关闭","preview":"查看大图","searchLoading":"正在翻找记忆……","searchEmpty":"没有找到……要不要换一个词试试？","searchError":"记忆库暂时打不开，请稍后再试。","searchFound":"找到 {count} 条记忆"}};
 </script>
 <script src="/js/cyrene.js" defer></script>
 

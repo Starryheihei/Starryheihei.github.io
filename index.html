@@ -33,7 +33,7 @@
       try {
         var key = 'cyrene-theme';
         var stored = localStorage.getItem(key);
-        var fallback = true;
+        var fallback = false;
         var dark = stored ? stored === 'dark' : (fallback || window.matchMedia('(prefers-color-scheme: dark)').matches);
         document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
       } catch (e) {}
@@ -50,8 +50,6 @@
     }
     body { font-size: var(--font-size-base); }
     
-    body { --site-bg-image: url('/images/site-bg.jpg'); }
-    
   </style>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.19.1/dist/katex.min.css">
 <style>
@@ -60,7 +58,7 @@
 
 
 <meta name="generator" content="Hexo 8.1.2"></head>
-<body class="is-home has-site-bg">
+<body class="is-home has-cover">
   <a class="skip-link" href="#main">跳到正文</a>
   <div class="bg-aurora" aria-hidden="true"></div>
   <div class="bg-stars" id="bg-stars" aria-hidden="true"></div>
@@ -118,42 +116,34 @@
   <main class="site-main" id="main">
     <div class="container">
       
-<section class="banner">
+
+<section class="cover has-cover-image" aria-label="Starryheihei">
   
-  <span class="banner-sparkle sparkle-1" aria-hidden="true">✦</span>
-  <span class="banner-sparkle sparkle-2" aria-hidden="true">✧</span>
-  <span class="banner-ornament" aria-hidden="true">♪</span>
+  <div class="cover-bg" style="background-image:url('/images/site-bg.jpg')" aria-hidden="true"></div>
+  
+  <div class="cover-shade" aria-hidden="true"></div>
 
-  <div class="banner-inner">
+  <div class="cover-inner">
+    <h1 class="cover-title text-anim" data-text="Starryheihei" data-anim="1" data-delay="300" data-stagger="55" aria-label="Starryheihei">
+      <span class="text-ghost" aria-hidden="true">Starryheihei</span>
+      <span class="text-live" aria-hidden="true"></span>
+    </h1>
     
-    <div class="banner-avatar">
-      <span class="avatar-ring" aria-hidden="true"></span>
-      <img src="/images/avatar.svg" alt="昔涟" width="112" height="112">
-    </div>
-    
-    <p class="banner-kicker">MEMORY · STARLIGHT · ♪</p>
-    <h1 class="banner-title">昔涟</h1>
-    <p class="banner-subtitle">把每一段记忆，收进故事里♪</p>
-
-    
-    <div class="banner-stats">
-      <span class="stat"><strong>2</strong><em>篇记忆</em></span>
-      <span class="stat-divider" aria-hidden="true"></span>
-      <span class="stat"><strong>1</strong><em>个分类</em></span>
-      <span class="stat-divider" aria-hidden="true"></span>
-      <span class="stat"><strong>3</strong><em>枚标签</em></span>
-    </div>
-    
-
-    
-    <a class="banner-cta" href="#latest">
-      <span>翻开故事</span>
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <path d="M12 5v14M5 12l7 7 7-7"/>
-      </svg>
-    </a>
+    <p class="cover-subtitle text-anim" data-text="下次见面时，我们会手捧鲜花" data-pinyin="1" data-anim="1" data-delay="900" data-stagger="80" aria-label="下次见面时，我们会手捧鲜花">
+      <span class="text-ghost" aria-hidden="true">下次见面时，我们会手捧鲜花</span>
+      <span class="text-live" aria-hidden="true"></span>
+    </p>
     
   </div>
+
+  
+  <a class="cover-scroll" href="#latest" aria-label="向下">
+    <span class="cover-scroll-line" aria-hidden="true"></span>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="m6 9 6 6 6-6"></path>
+    </svg>
+  </a>
+  
 </section>
 
 
@@ -357,7 +347,7 @@
 
   
 <script>
-  window.CYRENE_CONFIG = {"defaultDark":true,"stars":true,"petals":true,"cursorGlow":false,"lightbox":true,"copyCode":true,"giscus":false,"searchSource":"/search.xml","searchUrl":"/search/","strings":{"toLight":"切换到浅色","toDark":"切换到深色","copy":"复制","copied":"已收进记忆","copyFailed":"复制失败","close":"关闭","preview":"查看大图","searchLoading":"正在翻找记忆……","searchEmpty":"没有找到……要不要换一个词试试？","searchError":"记忆库暂时打不开，请稍后再试。","searchFound":"找到 {count} 条记忆"}};
+  window.CYRENE_CONFIG = {"defaultDark":false,"stars":true,"petals":true,"cursorGlow":false,"lightbox":true,"copyCode":true,"giscus":false,"searchSource":"/search.xml","searchUrl":"/search/","strings":{"toLight":"切换到浅色","toDark":"切换到深色","copy":"复制","copied":"已收进记忆","copyFailed":"复制失败","close":"关闭","preview":"查看大图","searchLoading":"正在翻找记忆……","searchEmpty":"没有找到……要不要换一个词试试？","searchError":"记忆库暂时打不开，请稍后再试。","searchFound":"找到 {count} 条记忆"}};
 </script>
 <script src="/js/cyrene.js" defer></script>
 
