@@ -3327,7 +3327,8 @@ body.is-post .reading-progress {
   position: relative;
   left: 50%;
   width: 100vw;
-  height: clamp(520px, 70vh, 820px);
+  height: 100vh;
+  height: 100svh;
   margin-top: calc(-1 * var(--header-h));
   margin-left: -50vw;
   display: flex;
@@ -3543,7 +3544,7 @@ html.js .text-live {
 }
 
 .text-char.is-revealed {
-  animation: char-pop 0.34s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation: char-pop 0.34s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 @keyframes char-pop {
@@ -3576,7 +3577,8 @@ html.js .text-live {
 
 @media (max-width: 720px) {
   .cover {
-    height: clamp(480px, 70vh, 700px);
+    height: 100vh;
+    height: 100svh;
   }
 
   .cover-inner {
@@ -3600,8 +3602,9 @@ html.js .text-live {
 
 @media (max-width: 520px) {
   .cover {
-    height: 66vh;
-    min-height: 460px;
+    height: 100vh;
+    height: 100svh;
+    min-height: 0;
   }
 
   .cover-title {
