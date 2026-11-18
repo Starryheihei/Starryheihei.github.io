@@ -3752,7 +3752,17 @@ html.js .text-anim.is-finished .text-live {
   }
 }
 
-/* ---------- 27. Full-page background ---------- */
+/* ---------- 27. Cursor effects ---------- */
+.cursor-fx {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* ---------- 28. Full-page background ---------- */
 body.has-site-bg {
   background-color: #171019;
   background-image:
@@ -3885,7 +3895,7 @@ body.has-site-bg .site-footer {
   }
 }
 
-/* ---------- 27. Print ---------- */
+/* ---------- 29. Print ---------- */
 @media print {
   .site-header,
   .site-footer,
@@ -3898,6 +3908,7 @@ body.has-site-bg .site-footer {
   .bg-stars,
   .bg-petals,
   .cursor-glow,
+  .cursor-fx,
   .comments,
   .post-nav,
   .license {

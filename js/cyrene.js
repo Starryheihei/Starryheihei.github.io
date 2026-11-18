@@ -653,6 +653,206 @@
     }, { passive: true });
   }
 
+  function initCursorFX() {
+    if (reduceMotion) return;
+
+    var trailEnabled = cfg.cursorTrail !== false;
+    var rippleEnabled = cfg.clickRipple !== false;
+    if (!trailEnabled && !rippleEnabled) return;
+
+    var canvas = doc.createElement('canvas');
+    canvas.className = 'cursor-fx';
+    canvas.setAttribute('aria-hidden', 'true');
+    doc.body.appendChild(canvas);
+
+    var ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var width = 0;
+    var height = 0;
+
+    function resize() {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = Math.round(width * dpr);
+      canvas.height = Math.round(height * dpr);
+      canvas.style.width = width + 'px';
+      canvas.style.height = height + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    resize();
+    on(window, 'resize', resize);
+
+    var particles = [];
+    var ripples = [];
+    var lastX = null;
+    var lastY = null;
+    var running = false;
+    var lastTime = 0;
+    var maxParticles = 260;
+
+    function random(min, max) {
+      return min + Math.random() * (max - min);
+    }
+
+    function ensureLoop() {
+      if (running) return;
+      running = true;
+      lastTime = window.performance.now();
+      window.requestAnimationFrame(frame);
+    }
+
+    function addParticle(x, y, options) {
+      options = options || {};
+      var life = options.life || random(0.45, 0.8);
+      particles.push({
+        x: x,
+        y: y,
+        vx: options.vx !== undefined ? options.vx : random(-12, 12),
+        vy: options.vy !== undefined ? options.vy : random(-18, -2),
+        size: options.size || random(1.6, 3.6),
+        hue: Math.random() < 0.22 ? 286 : 332,
+        life: life,
+        maxLife: life
+      });
+      if (particles.length > maxParticles) {
+        particles.splice(0, particles.length - maxParticles);
+      }
+    }
+
+    function addTrail(x, y) {
+      if (!trailEnabled) return;
+      var startX = lastX === null ? x : lastX;
+      var startY = lastY === null ? y : lastY;
+      var dx = x - startX;
+      var dy = y - startY;
+      var distance = Math.sqrt(dx * dx + dy * dy);
+      var steps = Math.max(1, Math.min(9, Math.ceil(distance / 9)));
+
+      for (var i = 1; i <= steps; i += 1) {
+        var t = i / steps;
+        addParticle(
+          startX + dx * t + random(-1.2, 1.2),
+          startY + dy * t + random(-1.2, 1.2)
+        );
+      }
+
+      lastX = x;
+      lastY = y;
+      ensureLoop();
+    }
+
+    function addRipple(x, y) {
+      if (!rippleEnabled) return;
+
+      ripples.push({
+        x: x,
+        y: y,
+        life: 0.82,
+        maxLife: 0.82,
+        radius: random(68, 96)
+      });
+
+      for (var i = 0; i < 7; i += 1) {
+        var angle = (Math.PI * 2 * i) / 7 + random(-0.2, 0.2);
+        var speed = random(34, 72);
+        addParticle(x, y, {
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          size: random(1.4, 2.6),
+          life: random(0.4, 0.7)
+        });
+      }
+
+      ensureLoop();
+    }
+
+    function frame(now) {
+      var dt = Math.min((now - lastTime) / 1000, 0.05);
+      lastTime = now;
+      ctx.clearRect(0, 0, width, height);
+
+      for (var i = particles.length - 1; i >= 0; i -= 1) {
+        var p = particles[i];
+        p.life -= dt;
+        if (p.life <= 0) {
+          particles.splice(i, 1);
+          continue;
+        }
+
+        p.x += p.vx * dt;
+        p.y += p.vy * dt;
+        p.vy += 14 * dt;
+
+        var alpha = Math.max(0, p.life / p.maxLife);
+        var glow = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size * 4);
+        glow.addColorStop(0, 'hsla(' + p.hue + ', 92%, 78%, ' + (alpha * 0.58) + ')');
+        glow.addColorStop(0.42, 'hsla(' + p.hue + ', 86%, 72%, ' + (alpha * 0.24) + ')');
+        glow.addColorStop(1, 'hsla(' + p.hue + ', 86%, 72%, 0)');
+        ctx.fillStyle = glow;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size * 4, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = 'rgba(255, 238, 247, ' + (alpha * 0.52) + ')';
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size * 0.8, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      for (var j = ripples.length - 1; j >= 0; j -= 1) {
+        var r = ripples[j];
+        r.life -= dt;
+        if (r.life <= 0) {
+          ripples.splice(j, 1);
+          continue;
+        }
+
+        var progress = 1 - r.life / r.maxLife;
+        var eased = 1 - Math.pow(1 - progress, 3);
+        ctx.beginPath();
+        ctx.arc(r.x, r.y, r.radius * eased, 0, Math.PI * 2);
+        ctx.strokeStyle = 'rgba(247, 164, 201, ' + ((1 - progress) * 0.72) + ')';
+        ctx.lineWidth = Math.max(0.6, 2.4 * (1 - progress));
+        ctx.stroke();
+
+        var innerProgress = Math.max(0, (progress - 0.16) / 0.84);
+        if (innerProgress > 0) {
+          ctx.beginPath();
+          ctx.arc(r.x, r.y, r.radius * 0.72 * (1 - Math.pow(1 - innerProgress, 3)), 0, Math.PI * 2);
+          ctx.strokeStyle = 'rgba(255, 221, 238, ' + ((1 - innerProgress) * 0.5) + ')';
+          ctx.lineWidth = Math.max(0.5, 1.5 * (1 - innerProgress));
+          ctx.stroke();
+        }
+      }
+
+      if (particles.length || ripples.length) {
+        window.requestAnimationFrame(frame);
+      } else {
+        running = false;
+      }
+    }
+
+    if (trailEnabled) {
+      on(doc, 'pointermove', function (event) {
+        if (event.pointerType === 'touch') return;
+        addTrail(event.clientX, event.clientY);
+      }, { passive: true });
+      on(doc, 'pointerleave', function () {
+        lastX = null;
+        lastY = null;
+      });
+    }
+
+    if (rippleEnabled) {
+      on(doc, 'pointerdown', function (event) {
+        addRipple(event.clientX, event.clientY);
+      }, { passive: true });
+    }
+  }
+
   function initCoverAnimation() {
     var nodes = $$('.text-anim');
     if (!nodes.length) return;
@@ -775,6 +975,7 @@
     makeStars();
     makePetals();
     setupCursorGlow();
+    initCursorFX();
     initCoverAnimation();
   }
 
