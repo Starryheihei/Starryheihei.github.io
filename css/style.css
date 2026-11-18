@@ -3512,10 +3512,79 @@ html[data-theme="dark"] body.has-cover .site-header.is-scrolled .icon-btn {
   color: var(--text);
 }
 
-/* Light theme keeps the photo dark, but a bright glow softens the hand-off. */
+/* Light theme: luminous airy cover, while the dark theme keeps its smoked glass. */
+html[data-theme="light"] .cover-bg {
+  filter: brightness(0.9) saturate(1);
+}
+
+html[data-theme="light"] .cover-shade {
+  background:
+    radial-gradient(65% 58% at 50% 45%, rgba(255, 255, 255, 0.16), transparent 72%),
+    linear-gradient(180deg, rgba(255, 226, 241, 0.4) 0%, rgba(255, 226, 241, 0.06) 38%, rgba(255, 226, 241, 0) 65%, rgba(255, 248, 247, 0.78) 100%);
+}
+
+html[data-theme="light"] .cover-inner::before {
+  content: "";
+  position: absolute;
+  top: 47%;
+  left: 50%;
+  z-index: -1;
+  width: 62%;
+  height: 42%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(255, 255, 255, 0.42), rgba(255, 238, 248, 0.14) 62%, transparent 78%);
+  filter: blur(16px);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+html[data-theme="light"] .cover-title {
+  color: #542b43;
+  text-shadow: 0 2px 18px rgba(255, 255, 255, 0.95), 0 1px 2px rgba(255, 255, 255, 0.7);
+}
+
+html[data-theme="light"] .cover-subtitle {
+  color: #764b61;
+  text-shadow: 0 1px 14px rgba(255, 255, 255, 0.95);
+}
+
 html[data-theme="light"] .cover::after {
   height: 190px;
   background: linear-gradient(180deg, transparent 0%, rgba(255, 236, 246, 0.34) 40%, rgba(255, 248, 247, 0.94) 88%, var(--bg) 100%);
+}
+
+html[data-theme="light"] body.has-cover .site-header .brand,
+html[data-theme="light"] body.has-cover .site-header .brand-text,
+html[data-theme="light"] body.has-cover .site-header .nav-link,
+html[data-theme="light"] body.has-cover .site-header .icon-btn {
+  color: #4a2f40;
+}
+
+html[data-theme="light"] body.has-cover .site-header .nav-link:hover,
+html[data-theme="light"] body.has-cover .site-header .nav-link.current {
+  color: var(--accent);
+}
+
+html[data-theme="light"] body.has-cover .site-header .nav-link:hover {
+  background: rgba(232, 121, 166, 0.1);
+}
+
+html[data-theme="light"] body.has-cover .site-header .nav-link.current::after {
+  background: var(--accent);
+}
+
+html[data-theme="light"] body.has-cover .site-header:not(.is-scrolled) .site-nav.is-open {
+  background: rgba(255, 250, 252, 0.96);
+  border-color: var(--border);
+  box-shadow: var(--shadow);
+}
+
+html[data-theme="light"] body.has-cover .site-header:not(.is-scrolled) .site-nav.is-open .nav-link {
+  color: var(--text-soft);
+}
+
+html[data-theme="light"] body.has-cover .site-header:not(.is-scrolled) .site-nav.is-open .nav-link.current {
+  color: var(--accent);
 }
 
 html[data-theme="light"] body.has-cover .site-header.is-scrolled {
