@@ -654,7 +654,7 @@
   }
 
   function initCursorFX() {
-    if (reduceMotion) return;
+    var motionReduced = reduceMotion;
 
     function readFlag(key, fallback) {
       try {
@@ -675,8 +675,8 @@
       }
     }
 
-    var trailEnabled = readFlag('cyrene-cursor-trail', cfg.cursorTrail !== false);
-    var rippleEnabled = readFlag('cyrene-click-ripple', cfg.clickRipple !== false);
+    var trailEnabled = motionReduced ? false : readFlag('cyrene-cursor-trail', cfg.cursorTrail !== false);
+    var rippleEnabled = motionReduced ? false : readFlag('cyrene-click-ripple', cfg.clickRipple !== false);
 
     var canvas = doc.createElement('canvas');
     canvas.className = 'cursor-fx';

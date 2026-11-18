@@ -395,6 +395,10 @@ html[data-theme="dark"] .site-header {
   display: none;
 }
 
+.icon-btn[hidden] {
+  display: none !important;
+}
+
 .fx-panel-title {
   margin: 0 0 8px;
   color: var(--muted);
