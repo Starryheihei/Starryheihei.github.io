@@ -693,6 +693,7 @@
 
       if (node.getAttribute('data-anim') === '0' || reduceMotion) {
         live.textContent = text;
+        node.classList.add('is-finished');
         return;
       }
 
@@ -730,7 +731,10 @@
         span.classList.remove('is-pinyin');
         span.classList.add('is-revealed');
         if (index === chars.length - 1) {
-          window.setTimeout(function () { window.clearInterval(noiseTimer); }, 350);
+          window.setTimeout(function () {
+            window.clearInterval(noiseTimer);
+            node.classList.add('is-finished');
+          }, 380);
         }
       }
 
