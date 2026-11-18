@@ -369,6 +369,120 @@ html[data-theme="dark"] .site-header {
   margin-left: 6px;
 }
 
+.fx-menu {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.fx-panel {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  z-index: 30;
+  width: 230px;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--surface-strong);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  box-shadow: var(--shadow);
+  color: var(--text);
+}
+
+.fx-panel[hidden] {
+  display: none;
+}
+
+.fx-panel-title {
+  margin: 0 0 8px;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.fx-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 9px 0;
+  color: var(--text-soft);
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.fx-row + .fx-row {
+  border-top: 1px dashed var(--border);
+}
+
+.fx-hint {
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-size: 0.68rem;
+  line-height: 1.5;
+}
+
+.fx-switch {
+  position: relative;
+  display: inline-flex;
+  flex: 0 0 auto;
+  width: 40px;
+  height: 22px;
+}
+
+.fx-switch input {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.fx-track {
+  display: block;
+  width: 40px;
+  height: 22px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface-soft, var(--border));
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.fx-track::after {
+  content: "";
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--text-soft);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.fx-switch input:checked + .fx-track {
+  border-color: var(--accent);
+  background: var(--accent);
+}
+
+.fx-switch input:checked + .fx-track::after {
+  transform: translateX(18px);
+  background: #fff;
+}
+
+.fx-switch input:focus-visible + .fx-track {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
 .icon-btn {
   display: grid;
   place-items: center;

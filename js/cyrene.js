@@ -656,9 +656,27 @@
   function initCursorFX() {
     if (reduceMotion) return;
 
-    var trailEnabled = cfg.cursorTrail !== false;
-    var rippleEnabled = cfg.clickRipple !== false;
-    if (!trailEnabled && !rippleEnabled) return;
+    function readFlag(key, fallback) {
+      try {
+        var saved = window.localStorage.getItem(key);
+        if (saved === 'on') return true;
+        if (saved === 'off') return false;
+      } catch (error) {
+        /* localStorage can be unavailable in strict privacy modes */
+      }
+      return fallback;
+    }
+
+    function saveFlag(key, value) {
+      try {
+        window.localStorage.setItem(key, value ? 'on' : 'off');
+      } catch (error) {
+        /* keep the in-memory switch working anyway */
+      }
+    }
+
+    var trailEnabled = readFlag('cyrene-cursor-trail', cfg.cursorTrail !== false);
+    var rippleEnabled = readFlag('cyrene-click-ripple', cfg.clickRipple !== false);
 
     var canvas = doc.createElement('canvas');
     canvas.className = 'cursor-fx';
@@ -769,6 +787,24 @@
       ensureLoop();
     }
 
+    window.CyreneFX = {
+      get: function () {
+        return { trail: trailEnabled, ripple: rippleEnabled };
+      },
+      setTrail: function (value) {
+        trailEnabled = !!value;
+        saveFlag('cyrene-cursor-trail', trailEnabled);
+        if (!trailEnabled) {
+          lastX = null;
+          lastY = null;
+        }
+      },
+      setRipple: function (value) {
+        rippleEnabled = !!value;
+        saveFlag('cyrene-click-ripple', rippleEnabled);
+      }
+    };
+
     function frame(now) {
       var dt = Math.min((now - lastTime) / 1000, 0.05);
       lastTime = now;
@@ -835,22 +871,79 @@
       }
     }
 
-    if (trailEnabled) {
-      on(doc, 'pointermove', function (event) {
-        if (event.pointerType === 'touch') return;
-        addTrail(event.clientX, event.clientY);
-      }, { passive: true });
-      on(doc, 'pointerleave', function () {
-        lastX = null;
-        lastY = null;
-      });
+    on(doc, 'pointermove', function (event) {
+      if (event.pointerType === 'touch') return;
+      addTrail(event.clientX, event.clientY);
+    }, { passive: true });
+
+    on(doc, 'pointerleave', function () {
+      lastX = null;
+      lastY = null;
+    });
+
+    on(doc, 'pointerdown', function (event) {
+      addRipple(event.clientX, event.clientY);
+    }, { passive: true });
+  }
+
+  function initFXControls() {
+    var button = doc.getElementById('fx-toggle');
+    var panel = doc.getElementById('fx-panel');
+    var trail = doc.getElementById('fx-trail');
+    var ripple = doc.getElementById('fx-ripple');
+    if (!button || !panel || !trail || !ripple) return;
+
+    if (!window.CyreneFX) {
+      button.hidden = true;
+      return;
     }
 
-    if (rippleEnabled) {
-      on(doc, 'pointerdown', function (event) {
-        addRipple(event.clientX, event.clientY);
-      }, { passive: true });
+    function sync() {
+      var state = window.CyreneFX.get();
+      trail.checked = state.trail;
+      ripple.checked = state.ripple;
+      trail.setAttribute('aria-checked', String(state.trail));
+      ripple.setAttribute('aria-checked', String(state.ripple));
     }
+
+    function setOpen(open) {
+      panel.hidden = !open;
+      button.setAttribute('aria-expanded', String(open));
+    }
+
+    button.addEventListener('click', function (event) {
+      event.stopPropagation();
+      setOpen(panel.hidden);
+      if (!panel.hidden) {
+        var first = panel.querySelector('input');
+        if (first) first.focus({ preventScroll: true });
+      }
+    });
+
+    trail.addEventListener('change', function () {
+      window.CyreneFX.setTrail(trail.checked);
+      sync();
+    });
+
+    ripple.addEventListener('change', function () {
+      window.CyreneFX.setRipple(ripple.checked);
+      sync();
+    });
+
+    doc.addEventListener('click', function (event) {
+      if (panel.hidden) return;
+      if (panel.contains(event.target) || button.contains(event.target)) return;
+      setOpen(false);
+    });
+
+    doc.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && !panel.hidden) {
+        setOpen(false);
+        button.focus();
+      }
+    });
+
+    sync();
   }
 
   function initCoverAnimation() {
@@ -976,6 +1069,7 @@
     makePetals();
     setupCursorGlow();
     initCursorFX();
+    initFXControls();
     initCoverAnimation();
   }
 

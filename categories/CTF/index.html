@@ -105,6 +105,32 @@
         </svg>
       </button>
       
+      <div class="fx-menu">
+        <button class="icon-btn fx-toggle" id="fx-toggle" type="button" aria-label="页面特效" title="页面特效" aria-expanded="false" aria-controls="fx-panel">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="m12 3 1.7 4.3L18 9l-4.3 1.7L12 15l-1.7-4.3L6 9l4.3-1.7L12 3Z"></path>
+            <path d="m18.5 14 .8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8.8-2.2Z"></path>
+          </svg>
+        </button>
+        <div class="fx-panel" id="fx-panel" role="group" aria-label="页面特效" hidden>
+          <p class="fx-panel-title">页面特效</p>
+          <label class="fx-row" for="fx-trail">
+            <span>粉色拖尾</span>
+            <span class="fx-switch">
+              <input type="checkbox" id="fx-trail" role="switch" aria-checked="true" checked>
+              <span class="fx-track" aria-hidden="true"></span>
+            </span>
+          </label>
+          <label class="fx-row" for="fx-ripple">
+            <span>点击涟漪</span>
+            <span class="fx-switch">
+              <input type="checkbox" id="fx-ripple" role="switch" aria-checked="true" checked>
+              <span class="fx-track" aria-hidden="true"></span>
+            </span>
+          </label>
+          <p class="fx-hint">设置只保存在这台设备</p>
+        </div>
+      </div>
       <button class="icon-btn nav-toggle" id="nav-toggle" type="button" aria-label="菜单" aria-controls="site-nav" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
