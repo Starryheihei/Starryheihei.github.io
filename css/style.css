@@ -2017,6 +2017,36 @@ html[data-theme="dark"] .social-link {
   cursor: default;
 }
 
+/* Cut-out diagrams should sit directly on the page background. */
+.post-content img[src*="d17755"],
+.post-content img[src*="image-1.png"] {
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+/* Dark theme: invert white-background screenshots/diagrams into a dark UI. */
+html[data-theme="dark"] .post-content img[src*="d17755"],
+html[data-theme="dark"] .post-content img[src*="image-1.png"],
+html[data-theme="dark"] .post-content img[src*="image-2.png"],
+html[data-theme="dark"] .post-content img[src*="image-3.png"],
+html[data-theme="dark"] .post-content img[src*="image-4.png"],
+html[data-theme="dark"] .post-content img[src*="image-5.png"],
+html[data-theme="dark"] .lightbox img[src*="d17755"],
+html[data-theme="dark"] .lightbox img[src*="image-1.png"],
+html[data-theme="dark"] .lightbox img[src*="image-2.png"],
+html[data-theme="dark"] .lightbox img[src*="image-3.png"],
+html[data-theme="dark"] .lightbox img[src*="image-4.png"],
+html[data-theme="dark"] .lightbox img[src*="image-5.png"] {
+  filter: invert(1) hue-rotate(180deg);
+}
+
+/* The lightbox overlay is dark even in the light theme. */
+html[data-theme="light"] .lightbox img[src*="d17755"],
+html[data-theme="light"] .lightbox img[src*="image-1.png"] {
+  background: #fff;
+}
+
 .post-content.has-lightbox img {
   cursor: zoom-in;
 }
