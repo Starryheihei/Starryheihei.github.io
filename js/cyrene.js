@@ -886,6 +886,96 @@
     }, { passive: true });
   }
 
+  function initPostActions() {
+    var button = $('.like-btn');
+    if (!button) return;
+
+    var label = button.querySelector('.like-label');
+    var key = 'cyrene-like:' + (button.getAttribute('data-path') || location.pathname);
+    var liked = false;
+
+    try {
+      liked = window.localStorage.getItem(key) === '1';
+    } catch (error) {
+      /* private browsing may block localStorage */
+    }
+
+    function render(value) {
+      button.classList.toggle('is-liked', value);
+      button.setAttribute('aria-pressed', String(value));
+      if (label) {
+        label.textContent = value ? (strings.liked || '已喜欢') : (strings.like || '喜欢');
+      }
+    }
+
+    render(liked);
+
+    on(button, 'click', function () {
+      liked = !liked;
+      try {
+        window.localStorage.setItem(key, liked ? '1' : '0');
+      } catch (error) {
+        /* keep the in-memory state working */
+      }
+      render(liked);
+
+      if (!reduceMotion) {
+        button.classList.remove('is-burst');
+        void button.offsetWidth;
+        button.classList.add('is-burst');
+        window.setTimeout(function () { button.classList.remove('is-burst'); }, 500);
+      }
+    });
+  }
+
+  function initFollowCount() {
+    var nodes = $$('[data-github-followers]');
+    if (!nodes.length || !window.fetch) return;
+
+    var user = nodes[0].getAttribute('data-github-followers');
+    if (!user) return;
+
+    var cacheKey = 'cyrene-gh-followers:' + user;
+    var cached = null;
+
+    try {
+      cached = JSON.parse(window.localStorage.getItem(cacheKey) || 'null');
+    } catch (error) {
+      cached = null;
+    }
+
+    function render(count) {
+      nodes.forEach(function (node) {
+        var target = node.querySelector('.follow-count');
+        if (!target) return;
+        target.textContent = Number(count).toLocaleString() + ' ' + (strings.followers || 'followers');
+        target.hidden = false;
+      });
+    }
+
+    if (cached && typeof cached.count === 'number' && Date.now() - cached.time < 21600000) {
+      render(cached.count);
+      return;
+    }
+
+    fetch('https://api.github.com/users/' + encodeURIComponent(user), {
+      headers: { Accept: 'application/vnd.github+json' }
+    })
+      .then(function (response) { return response.ok ? response.json() : null; })
+      .then(function (data) {
+        if (!data || typeof data.followers !== 'number') return;
+        render(data.followers);
+        try {
+          window.localStorage.setItem(cacheKey, JSON.stringify({ count: data.followers, time: Date.now() }));
+        } catch (error) {
+          /* ignore storage failures */
+        }
+      })
+      .catch(function () {
+        /* keep the button useful even if the API is unavailable */
+      });
+  }
+
   function initFXControls() {
     var button = doc.getElementById('fx-toggle');
     var panel = doc.getElementById('fx-panel');
@@ -1061,6 +1151,8 @@
     setupCopyButtons();
     buildTOC();
     setupLightbox();
+    initPostActions();
+    initFollowCount();
     wrapTables();
     markExternalLinks();
     initSearch();
