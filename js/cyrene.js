@@ -892,13 +892,15 @@
 
     var audio = $('#music-audio');
     var playButton = $('#music-play');
+    var modeButton = $('#music-mode');
+    var modeLabel = $('#music-mode-label');
     var listButton = $('#music-list-toggle');
     var panel = $('#music-panel');
     var title = $('#music-title');
     var artist = $('#music-artist');
     var tracks = (cfg.music && cfg.music.playlist) || [];
 
-    if (!audio || !playButton || !listButton || !panel || !tracks.length) return;
+    if (!audio || !playButton || !modeButton || !listButton || !panel || !tracks.length) return;
 
     var index = 0;
     var savedTime = 0;
@@ -907,6 +909,16 @@
     var trackKey = 'cyrene-music-track';
     var timeKey = 'cyrene-music-time';
     var volumeKey = 'cyrene-music-volume';
+    var modeKey = 'cyrene-music-mode';
+    var modes = ['sequence', 'shuffle', 'loop'];
+    var mode = 'sequence';
+
+    try {
+      var storedMode = window.localStorage.getItem(modeKey);
+      if (modes.indexOf(storedMode) !== -1) mode = storedMode;
+    } catch (error) {
+      /* ignore storage failures */
+    }
 
     try {
       var storedIndex = parseInt(window.localStorage.getItem(trackKey), 10);
@@ -946,6 +958,38 @@
         var state = trackButton.querySelector('.music-track-state');
         if (state) state.textContent = isActive ? '♪' : '';
       });
+    }
+
+    function renderMode() {
+      player.classList.remove('mode-sequence', 'mode-shuffle', 'mode-loop');
+      player.classList.add('mode-' + mode);
+
+      var labels = {
+        sequence: strings.musicModeSequence || '顺序播放',
+        shuffle: strings.musicModeShuffle || '乱序播放',
+        loop: strings.musicModeLoop || '单曲循环'
+      };
+      var label = labels[mode];
+      modeButton.setAttribute('aria-label', label);
+      modeButton.setAttribute('title', label);
+      if (modeLabel) modeLabel.textContent = label;
+    }
+
+    function cycleMode() {
+      mode = modes[(modes.indexOf(mode) + 1) % modes.length];
+      save(modeKey, mode);
+      renderMode();
+    }
+
+    function nextTrackIndex() {
+      if (mode === 'shuffle' && tracks.length > 1) {
+        var next = index;
+        while (next === index) {
+          next = Math.floor(Math.random() * tracks.length);
+        }
+        return next;
+      }
+      return index + 1;
     }
 
     function setTrack(nextIndex, autoplay, resume) {
@@ -992,6 +1036,8 @@
       setOpen(panel.hidden);
     });
 
+    on(modeButton, 'click', cycleMode);
+
     $$('.music-track', panel).forEach(function (trackButton) {
       on(trackButton, 'click', function () {
         setTrack(Number(trackButton.getAttribute('data-index')), true, false);
@@ -1025,7 +1071,13 @@
     });
 
     on(audio, 'ended', function () {
-      setTrack(index + 1, true, false);
+      if (mode === 'loop') {
+        audio.currentTime = 0;
+        var loopPromise = audio.play();
+        if (loopPromise && loopPromise.catch) loopPromise.catch(function () {});
+      } else {
+        setTrack(nextTrackIndex(), true, false);
+      }
     });
 
     on(audio, 'timeupdate', function () {
@@ -1052,6 +1104,7 @@
       save(timeKey, String(audio.currentTime));
     });
 
+    renderMode();
     setTrack(index, false, true);
   }
 

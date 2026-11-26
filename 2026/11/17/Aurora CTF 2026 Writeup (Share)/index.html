@@ -40,7 +40,7 @@
     })();
   </script>
 
-  <link rel="stylesheet" href="/css/style.css?v=20261119-7">
+  <link rel="stylesheet" href="/css/style.css?v=20261119-8">
   <style>
     :root {
       --accent: #e879a6;
@@ -1011,7 +1011,7 @@ v[2k+1] = c &gt;&gt; 2（c 的高 6 位）</p>
 
   
 
-<div class="music-player" id="music-player" data-volume="0.55">
+<div class="music-player mode-sequence" id="music-player" data-volume="0.55">
   <audio id="music-audio" preload="metadata"></audio>
   <span class="music-disc" aria-hidden="true">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -1026,12 +1026,27 @@ v[2k+1] = c &gt;&gt; 2（c 的高 6 位）</p>
     <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5-11-6.5Z"></path></svg>
     <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5h3v14H8zM13 5h3v14h-3z"></path></svg>
   </button>
+  <button class="music-btn music-mode" id="music-mode" type="button" aria-label="顺序播放" title="顺序播放">
+    <svg class="mode-icon mode-sequence-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M4 12h15M14 6l6 6-6 6"></path>
+    </svg>
+    <svg class="mode-icon mode-shuffle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M4 7h3c5 0 5 10 10 10h3M17 4l3 3-3 3M17 14l3 3-3 3M4 17h3c1.8 0 3-1.2 4-2.8"></path>
+    </svg>
+    <svg class="mode-icon mode-loop-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M17 2l4 4-4 4M3 11V9a4 4 0 0 1 4-4h14M7 22l-4-4 4-4M21 13v2a4 4 0 0 1-4 4H3"></path>
+    </svg>
+  </button>
   <button class="music-btn music-list-toggle" id="music-list-toggle" type="button" aria-label="选择歌曲" aria-expanded="false" aria-controls="music-panel">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
       <path d="M4 7h16M4 12h16M4 17h10"></path>
     </svg>
   </button>
   <div class="music-panel" id="music-panel" hidden>
+    <div class="music-panel-mode">
+      <span>播放模式</span>
+      <strong id="music-mode-label">顺序播放</strong>
+    </div>
     <p class="music-panel-title">歌单</p>
     <div class="music-tracks">
       
@@ -1115,9 +1130,9 @@ v[2k+1] = c &gt;&gt; 2（c 的高 6 位）</p>
 
   
 <script>
-  window.CYRENE_CONFIG = {"defaultDark":false,"stars":true,"petals":true,"cursorGlow":false,"cursorTrail":true,"clickRipple":true,"lightbox":true,"copyCode":true,"giscus":false,"music":{"enable":true,"volume":0.55,"playlist":[{"title":"再度和你","artist":"Cyrene","src":"/music/从未道离去 - 昔涟PV (再度和你).mp3"},{"title":"蝴蝶","artist":"洛天依","src":"/music/洛天依 - 蝴蝶.mp3"},{"title":"光与影的对白","artist":"洛天依","src":"/music/洛天依 - 光与影的对白.mp3"},{"title":"越冰船","artist":"洛天依","src":"/music/洛天依 - 越冰船.mp3"},{"title":"流光","artist":"洛天依","src":"/music/洛天依-流光 (Light Me Up).mp3"},{"title":"心印","artist":"洛天依","src":"/music/洛天依 - 心印.mp3"},{"title":"万分之一的光","artist":"洛天依","src":"/music/洛天依 - 万分之一的光.mp3"},{"title":"但我讨厌摇滚乐","artist":"洛天依","src":"/music/洛天依 - 但我讨厌摇滚乐.mp3"}]},"searchSource":"/search.xml","searchUrl":"/search/","strings":{"toLight":"切换到浅色","toDark":"切换到深色","copy":"复制","copied":"已收进记忆","copyFailed":"复制失败","close":"关闭","preview":"查看大图","like":"喜欢","liked":"已喜欢","followers":"位关注者","musicPlay":"播放","musicPause":"暂停","musicUntitled":"未命名","searchLoading":"正在翻找记忆……","searchEmpty":"没有找到……要不要换一个词试试？","searchError":"记忆库暂时打不开，请稍后再试。","searchFound":"找到 {count} 条记忆"}};
+  window.CYRENE_CONFIG = {"defaultDark":false,"stars":true,"petals":true,"cursorGlow":false,"cursorTrail":true,"clickRipple":true,"lightbox":true,"copyCode":true,"giscus":false,"music":{"enable":true,"volume":0.55,"playlist":[{"title":"再度和你","artist":"Cyrene","src":"/music/从未道离去 - 昔涟PV (再度和你).mp3"},{"title":"蝴蝶","artist":"洛天依","src":"/music/洛天依 - 蝴蝶.mp3"},{"title":"光与影的对白","artist":"洛天依","src":"/music/洛天依 - 光与影的对白.mp3"},{"title":"越冰船","artist":"洛天依","src":"/music/洛天依 - 越冰船.mp3"},{"title":"流光","artist":"洛天依","src":"/music/洛天依-流光 (Light Me Up).mp3"},{"title":"心印","artist":"洛天依","src":"/music/洛天依 - 心印.mp3"},{"title":"万分之一的光","artist":"洛天依","src":"/music/洛天依 - 万分之一的光.mp3"},{"title":"但我讨厌摇滚乐","artist":"洛天依","src":"/music/洛天依 - 但我讨厌摇滚乐.mp3"}]},"searchSource":"/search.xml","searchUrl":"/search/","strings":{"toLight":"切换到浅色","toDark":"切换到深色","copy":"复制","copied":"已收进记忆","copyFailed":"复制失败","close":"关闭","preview":"查看大图","like":"喜欢","liked":"已喜欢","followers":"位关注者","musicPlay":"播放","musicPause":"暂停","musicUntitled":"未命名","musicModeSequence":"顺序播放","musicModeShuffle":"乱序播放","musicModeLoop":"单曲循环","searchLoading":"正在翻找记忆……","searchEmpty":"没有找到……要不要换一个词试试？","searchError":"记忆库暂时打不开，请稍后再试。","searchFound":"找到 {count} 条记忆"}};
 </script>
-<script src="/js/cyrene.js?v=20261119-7" defer></script>
+<script src="/js/cyrene.js?v=20261119-8" defer></script>
 
 
 </body>
