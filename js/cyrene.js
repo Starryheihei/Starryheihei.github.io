@@ -886,6 +886,175 @@
     }, { passive: true });
   }
 
+  function initMusicPlayer() {
+    var player = $('#music-player');
+    if (!player) return;
+
+    var audio = $('#music-audio');
+    var playButton = $('#music-play');
+    var listButton = $('#music-list-toggle');
+    var panel = $('#music-panel');
+    var title = $('#music-title');
+    var artist = $('#music-artist');
+    var tracks = (cfg.music && cfg.music.playlist) || [];
+
+    if (!audio || !playButton || !listButton || !panel || !tracks.length) return;
+
+    var index = 0;
+    var savedTime = 0;
+    var restoreTime = 0;
+    var lastSave = 0;
+    var trackKey = 'cyrene-music-track';
+    var timeKey = 'cyrene-music-time';
+    var volumeKey = 'cyrene-music-volume';
+
+    try {
+      var storedIndex = parseInt(window.localStorage.getItem(trackKey), 10);
+      if (storedIndex >= 0 && storedIndex < tracks.length) index = storedIndex;
+    } catch (error) {
+      /* ignore storage failures */
+    }
+
+    try {
+      var storedTime = parseFloat(window.localStorage.getItem(timeKey));
+      if (isFinite(storedTime)) savedTime = storedTime;
+    } catch (error) {
+      /* ignore storage failures */
+    }
+
+    var volume = cfg.music && typeof cfg.music.volume === 'number' ? cfg.music.volume : 0.55;
+    try {
+      var storedVolume = parseFloat(window.localStorage.getItem(volumeKey));
+      if (isFinite(storedVolume)) volume = storedVolume;
+    } catch (error) {
+      /* ignore storage failures */
+    }
+    audio.volume = Math.max(0, Math.min(1, volume));
+
+    function save(key, value) {
+      try {
+        window.localStorage.setItem(key, value);
+      } catch (error) {
+        /* ignore storage failures */
+      }
+    }
+
+    function updateTracks() {
+      $$('.music-track', panel).forEach(function (trackButton) {
+        var isActive = Number(trackButton.getAttribute('data-index')) === index;
+        trackButton.classList.toggle('is-active', isActive);
+        var state = trackButton.querySelector('.music-track-state');
+        if (state) state.textContent = isActive ? '♪' : '';
+      });
+    }
+
+    function setTrack(nextIndex, autoplay, resume) {
+      if (!tracks.length) return;
+
+      index = (nextIndex + tracks.length) % tracks.length;
+      var track = tracks[index] || {};
+      audio.src = track.src;
+      audio.load();
+
+      if (title) title.textContent = track.title || strings.musicUntitled || 'Untitled';
+      if (artist) artist.textContent = track.artist || '';
+
+      restoreTime = resume ? savedTime : 0;
+      updateTracks();
+      save(trackKey, String(index));
+
+      if (autoplay) {
+        var promise = audio.play();
+        if (promise && promise.catch) promise.catch(function () {});
+      }
+    }
+
+    function setOpen(open) {
+      panel.hidden = !open;
+      listButton.setAttribute('aria-expanded', String(open));
+      if (open) {
+        var active = panel.querySelector('.music-track.is-active');
+        if (active) active.focus({ preventScroll: true });
+      }
+    }
+
+    on(playButton, 'click', function () {
+      if (audio.paused) {
+        var promise = audio.play();
+        if (promise && promise.catch) promise.catch(function () {});
+      } else {
+        audio.pause();
+      }
+    });
+
+    on(listButton, 'click', function (event) {
+      event.stopPropagation();
+      setOpen(panel.hidden);
+    });
+
+    $$('.music-track', panel).forEach(function (trackButton) {
+      on(trackButton, 'click', function () {
+        setTrack(Number(trackButton.getAttribute('data-index')), true, false);
+        setOpen(false);
+      });
+    });
+
+    on(doc, 'click', function (event) {
+      if (!panel.hidden && !panel.contains(event.target) && !listButton.contains(event.target)) {
+        setOpen(false);
+      }
+    });
+
+    on(doc, 'keydown', function (event) {
+      if (event.key === 'Escape' && !panel.hidden) {
+        setOpen(false);
+        listButton.focus();
+      }
+    });
+
+    on(audio, 'play', function () {
+      player.classList.add('is-playing');
+      playButton.setAttribute('aria-pressed', 'true');
+      playButton.setAttribute('aria-label', strings.musicPause || 'Pause');
+    });
+
+    on(audio, 'pause', function () {
+      player.classList.remove('is-playing');
+      playButton.setAttribute('aria-pressed', 'false');
+      playButton.setAttribute('aria-label', strings.musicPlay || 'Play');
+    });
+
+    on(audio, 'ended', function () {
+      setTrack(index + 1, true, false);
+    });
+
+    on(audio, 'timeupdate', function () {
+      var now = Date.now();
+      if (now - lastSave > 1000) {
+        lastSave = now;
+        save(timeKey, String(audio.currentTime));
+      }
+    });
+
+    on(audio, 'loadedmetadata', function () {
+      if (restoreTime > 0) {
+        var maxTime = Math.max(0, (audio.duration || 0) - 0.5);
+        audio.currentTime = Math.min(restoreTime, maxTime);
+        restoreTime = 0;
+      }
+    });
+
+    on(audio, 'error', function () {
+      player.classList.add('is-error');
+    });
+
+    on(window, 'beforeunload', function () {
+      save(timeKey, String(audio.currentTime));
+    });
+
+    setTrack(index, false, true);
+  }
+
   function initPostActions() {
     var button = $('.like-btn');
     if (!button) return;
@@ -1153,6 +1322,7 @@
     setupLightbox();
     initPostActions();
     initFollowCount();
+    initMusicPlayer();
     wrapTables();
     markExternalLinks();
     initSearch();
