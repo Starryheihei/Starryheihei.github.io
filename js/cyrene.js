@@ -892,10 +892,21 @@
   }
 
   function initSongPage() {
-    var audio = $('#song-audio');
-    if (!audio) return;
+    if (window.CyreneSongPageCleanup) {
+      window.CyreneSongPageCleanup();
+      window.CyreneSongPageCleanup = null;
+    }
 
     var page = $('.song-page');
+    if (!page) {
+      window.CyreneSongPageActive = false;
+      return;
+    }
+
+    var api = window.CyreneMusic;
+    if (!api || !api.audio) return;
+
+    var audio = api.audio;
     var playButton = $('#song-play');
     var progress = $('#song-progress');
     var currentTime = $('#song-current');
@@ -909,6 +920,29 @@
     var activeIndex = -1;
     var duration = 0;
     var seeking = false;
+    var bound = [];
+
+    window.CyreneSongPageActive = true;
+
+    var trackSrc = page.getAttribute('data-src');
+    if (trackSrc && api.selectBySrc) {
+      api.selectBySrc(trackSrc, !audio.paused);
+    }
+
+    function listen(target, type, handler) {
+      if (!target) return;
+      target.addEventListener(type, handler);
+      bound.push([target, type, handler]);
+    }
+
+    function cleanup() {
+      bound.forEach(function (item) {
+        item[0].removeEventListener(item[1], item[2]);
+      });
+      bound = [];
+      window.CyreneSongPageActive = false;
+    }
+    window.CyreneSongPageCleanup = cleanup;
 
     function formatTime(seconds) {
       if (!isFinite(seconds) || seconds < 0) seconds = 0;
@@ -1020,26 +1054,28 @@
         .then(function (response) { return response.ok ? response.text() : null; })
         .then(function (text) {
           if (text === null) throw new Error('lrc');
-          renderLyrics(parseLrc(text));
+          if (doc.contains(page)) renderLyrics(parseLrc(text));
         })
         .catch(function () {
-          if (lyrics) {
+          if (lyrics && doc.contains(page)) {
             lyrics.innerHTML = '<p class="lyrics-empty">' + (emptyText || 'No lyrics yet') + '</p>';
           }
-          if (lyricsStatus) lyricsStatus.textContent = emptyText || 'No lyrics yet';
+          if (lyricsStatus && doc.contains(page)) {
+            lyricsStatus.textContent = emptyText || 'No lyrics yet';
+          }
         });
     } else {
       renderLyrics([]);
     }
 
-    on(audio, 'loadedmetadata', updateDuration);
+    listen(audio, 'loadedmetadata', updateDuration);
 
-    on(audio, 'timeupdate', function () {
+    listen(audio, 'timeupdate', function () {
       updateProgress();
       if (!seeking) syncLyrics(audio.currentTime);
     });
 
-    on(progress, 'input', function () {
+    listen(progress, 'input', function () {
       seeking = true;
       if (duration) {
         audio.currentTime = (Number(progress.value) / 1000) * duration;
@@ -1047,11 +1083,11 @@
       }
     });
 
-    on(progress, 'change', function () {
+    listen(progress, 'change', function () {
       seeking = false;
     });
 
-    on(playButton, 'click', function () {
+    listen(playButton, 'click', function () {
       if (audio.paused) {
         var promise = audio.play();
         if (promise && promise.catch) promise.catch(function () {});
@@ -1060,24 +1096,25 @@
       }
     });
 
-    on(audio, 'play', function () {
+    listen(audio, 'play', function () {
       if (page) page.classList.add('is-playing');
       playButton.setAttribute('aria-pressed', 'true');
       playButton.setAttribute('aria-label', strings.musicPause || 'Pause');
     });
 
-    on(audio, 'pause', function () {
+    listen(audio, 'pause', function () {
       if (page) page.classList.remove('is-playing');
       playButton.setAttribute('aria-pressed', 'false');
       playButton.setAttribute('aria-label', strings.musicPlay || 'Play');
     });
 
-    on(audio, 'ended', function () {
+    listen(audio, 'ended', function () {
       if (page) page.classList.remove('is-playing');
       progress.value = '1000';
     });
 
     updateDuration();
+    if (!audio.paused) page.classList.add('is-playing');
   }
 
   function initMusicPlayer() {
@@ -1203,6 +1240,23 @@
       return index + 1;
     }
 
+    function selectBySrc(src, autoplay) {
+      var target = new URL(src, location.href).href;
+      var next = -1;
+      tracks.forEach(function (track, trackIndex) {
+        if (new URL(track.src, location.href).href === target) next = trackIndex;
+      });
+      if (next < 0) return false;
+
+      if (next !== index) {
+        setTrack(next, !!autoplay, false);
+      } else if (autoplay && audio.paused) {
+        var promise = audio.play();
+        if (promise && promise.catch) promise.catch(function () {});
+      }
+      return true;
+    }
+
     function setTrack(nextIndex, autoplay, resume) {
       if (!tracks.length) return;
 
@@ -1283,6 +1337,7 @@
     });
 
     on(audio, 'ended', function () {
+      if (window.CyreneSongPageActive) return;
       if (mode === 'loop') {
         audio.currentTime = 0;
         var loopPromise = audio.play();
@@ -1317,6 +1372,11 @@
     });
 
     window.CyreneMusic = {
+      audio: audio,
+      tracks: tracks,
+      selectBySrc: selectBySrc,
+      getIndex: function () { return index; },
+      getTrack: function () { return tracks[index] || null; },
       pause: function () { audio.pause(); },
       play: function () {
         var promise = audio.play();
@@ -1674,10 +1734,6 @@
             if (targetNode) targetNode.scrollIntoView();
           }
 
-          if (doc.querySelector('.song-page') && window.CyreneMusic) {
-            window.CyreneMusic.pause();
-          }
-
           body.classList.remove('is-pjaxing');
           loading = false;
         })
@@ -1719,6 +1775,7 @@
 
   /* ---------- Init ---------- */
   function init() {
+    initMusicPlayer();
     initPage();
     setupSearchShortcut();
     makeStars();
@@ -1726,7 +1783,6 @@
     setupCursorGlow();
     initCursorFX();
     initFXControls();
-    initMusicPlayer();
     initPjax();
   }
 
