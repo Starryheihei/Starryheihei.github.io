@@ -40,7 +40,7 @@
     })();
   </script>
 
-  <link rel="stylesheet" href="/css/style.css?v=20261119-9">
+  <link rel="stylesheet" href="/css/style.css?v=20261119-10">
   <style>
     :root {
       --accent: #e879a6;
@@ -388,15 +388,17 @@ NSSCTF{Th3r3_ar3_1ns3cure_RSA_m0duli_7hat_at_f1rst_gl4nce_appe4r_t0_be_s3cur3}</
 
 <div class="music-player mode-sequence" id="music-player" data-volume="0.55">
   <audio id="music-audio" preload="metadata"></audio>
-  <span class="music-disc" aria-hidden="true">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M9 18V5l10-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="16" cy="16" r="3"></circle>
-    </svg>
-  </span>
-  <div class="music-meta">
-    <span class="music-title" id="music-title">再度和你</span>
-    <span class="music-artist" id="music-artist">Cyrene</span>
-  </div>
+  <a class="music-link" id="music-detail-link" href="/music/" aria-label="打开歌曲详情">
+    <span class="music-disc" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 18V5l10-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="16" cy="16" r="3"></circle>
+      </svg>
+    </span>
+    <div class="music-meta">
+      <span class="music-title" id="music-title">再度和你</span>
+      <span class="music-artist" id="music-artist">Cyrene</span>
+    </div>
+  </a>
   <button class="music-btn music-play" id="music-play" type="button" aria-label="播放" aria-pressed="false">
     <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5-11-6.5Z"></path></svg>
     <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5h3v14H8zM13 5h3v14h-3z"></path></svg>
@@ -552,7 +554,7 @@ NSSCTF{Th3r3_ar3_1ns3cure_RSA_m0duli_7hat_at_f1rst_gl4nce_appe4r_t0_be_s3cur3}</
 <script>
   window.CYRENE_CONFIG = {"defaultDark":false,"stars":true,"petals":true,"cursorGlow":false,"cursorTrail":true,"clickRipple":true,"lightbox":true,"copyCode":true,"giscus":false,"music":{"enable":true,"volume":0.55,"playlist":[{"title":"再度和你","artist":"Cyrene","src":"/music/从未道离去 - 昔涟PV (再度和你).mp3"},{"title":"蝴蝶","artist":"洛天依","src":"/music/洛天依 - 蝴蝶.mp3"},{"title":"光与影的对白","artist":"洛天依","src":"/music/洛天依 - 光与影的对白.mp3"},{"title":"越冰船","artist":"洛天依","src":"/music/洛天依 - 越冰船.mp3"},{"title":"流光","artist":"洛天依","src":"/music/洛天依-流光 (Light Me Up).mp3"},{"title":"心印","artist":"洛天依","src":"/music/洛天依 - 心印.mp3"},{"title":"万分之一的光","artist":"洛天依","src":"/music/洛天依 - 万分之一的光.mp3"},{"title":"风之子","artist":"洛天依","src":"/music/“天大地大 任我出发 随风去啊”《风之子》洛天依14周年生日会 P1 “天大地大 任我出发 随风去啊”《风之子》洛天依14周年生日会.aac"},{"title":"地府美食家","artist":"洛天依","src":"/music/【2026冰火歌会】夏日启航 P1 “急急如律令 肚肚响地狱”洛天依《地府美食家》【冰火歌会】_41190362849.aac"},{"title":"终冕","artist":"洛天依","src":"/music/洛天依 - 终冕.mp3"},{"title":"66CCFF","artist":"洛天依","src":"/music/洛天依 - 66CCFF.mp3"},{"title":"辟浪","artist":"洛天依","src":"/music/辟浪【2026拜年纪单品】.mp3"},{"title":"杠上开花","artist":"洛天依","src":"/music/iKz - 杠上开花 feat.洛天依 & 言和_1854100697.mp3"}]},"searchSource":"/search.xml","searchUrl":"/search/","strings":{"toLight":"切换到浅色","toDark":"切换到深色","copy":"复制","copied":"已收进记忆","copyFailed":"复制失败","close":"关闭","preview":"查看大图","like":"喜欢","liked":"已喜欢","followers":"位关注者","musicPlay":"播放","musicPause":"暂停","musicUntitled":"未命名","musicModeSequence":"顺序播放","musicModeShuffle":"乱序播放","musicModeLoop":"单曲循环","searchLoading":"正在翻找记忆……","searchEmpty":"没有找到……要不要换一个词试试？","searchError":"记忆库暂时打不开，请稍后再试。","searchFound":"找到 {count} 条记忆"}};
 </script>
-<script src="/js/cyrene.js?v=20261119-9" defer></script>
+<script src="/js/cyrene.js?v=20261119-10" defer></script>
 
 
 </body>

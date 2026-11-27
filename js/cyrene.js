@@ -309,6 +309,11 @@
   /* ---------- Lightbox ---------- */
   function setupLightbox() {
     if (!cfg.lightbox) return;
+
+    var previousBox = $('.lightbox');
+    if (previousBox) previousBox.remove();
+    body.classList.remove('lightbox-open');
+
     var content = doc.getElementById('post-content');
     var images = content ? $$('img', content) : [];
     if (!images.length) return;
@@ -1084,6 +1089,7 @@
     var modeButton = $('#music-mode');
     var modeLabel = $('#music-mode-label');
     var listButton = $('#music-list-toggle');
+    var detailLink = $('#music-detail-link');
     var panel = $('#music-panel');
     var title = $('#music-title');
     var artist = $('#music-artist');
@@ -1140,6 +1146,21 @@
       }
     }
 
+    function slugifyTrack(value) {
+      return String(value || 'track')
+        .replace(/\.[^.]+$/, '')
+        .replace(/[\\/:*?"<>|]/g, '-')
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-')
+        .replace(/^-+|-+$/g, '') || 'track';
+    }
+
+    function updateDetailLink(track) {
+      if (!detailLink) return;
+      var slug = slugifyTrack(track.slug || track.title || track.src);
+      detailLink.href = '/music/' + encodeURIComponent(slug) + '/';
+    }
+
     function updateTracks() {
       $$('.music-track', panel).forEach(function (trackButton) {
         var isActive = Number(trackButton.getAttribute('data-index')) === index;
@@ -1192,6 +1213,7 @@
 
       if (title) title.textContent = track.title || strings.musicUntitled || 'Untitled';
       if (artist) artist.textContent = track.artist || '';
+      updateDetailLink(track);
 
       restoreTime = resume ? savedTime : 0;
       updateTracks();
@@ -1293,6 +1315,15 @@
     on(window, 'beforeunload', function () {
       save(timeKey, String(audio.currentTime));
     });
+
+    window.CyreneMusic = {
+      pause: function () { audio.pause(); },
+      play: function () {
+        var promise = audio.play();
+        if (promise && promise.catch) promise.catch(function () {});
+      },
+      isPlaying: function () { return !audio.paused; }
+    };
 
     renderMode();
     setTrack(index, false, true);
@@ -1558,25 +1589,145 @@
     }, 6000);
   }
 
-  /* ---------- Init ---------- */
-  function init() {
+  /* ---------- Page init / PJAX ---------- */
+  function updateActiveNav(href) {
+    var path = new URL(href, location.href).pathname;
+    $$('.site-nav .nav-link').forEach(function (link) {
+      var linkUrl = new URL(link.href, location.href);
+      var linkPath = linkUrl.pathname;
+      var current = linkPath === '/'
+        ? path === '/'
+        : (path === linkPath || path.indexOf(linkPath.replace(/\/$/, '') + '/') === 0);
+      link.classList.toggle('current', current);
+    });
+  }
+
+  function initPage() {
     setupCopyButtons();
     buildTOC();
     setupLightbox();
     initPostActions();
     initFollowCount();
     initSongPage();
-    initMusicPlayer();
+    initSearch();
     wrapTables();
     markExternalLinks();
-    initSearch();
+    initCoverAnimation();
+  }
+
+  function initPjax() {
+    if (!window.fetch || !window.history || !window.history.pushState) return;
+
+    var loading = false;
+
+    function loadPage(url, push) {
+      if (loading) return;
+      loading = true;
+
+      var target;
+      try {
+        target = new URL(url, location.href);
+      } catch (error) {
+        location.href = url;
+        return;
+      }
+
+      body.classList.add('is-pjaxing');
+
+      fetch(target.href, { headers: { 'X-Requested-With': 'pjax' } })
+        .then(function (response) {
+          if (!response.ok) throw new Error('pjax');
+          return response.text();
+        })
+        .then(function (html) {
+          var next = new DOMParser().parseFromString(html, 'text/html');
+          var nextMain = next.querySelector('.site-main');
+          var currentMain = doc.querySelector('.site-main');
+          if (!nextMain || !currentMain) throw new Error('pjax');
+
+          currentMain.innerHTML = nextMain.innerHTML;
+          doc.title = next.title;
+          body.className = next.body.className;
+
+          var nextDesc = next.querySelector('meta[name="description"]');
+          var currentDesc = doc.querySelector('meta[name="description"]');
+          if (nextDesc && currentDesc) {
+            currentDesc.setAttribute('content', nextDesc.getAttribute('content') || '');
+          }
+
+          if (nav) nav.classList.remove('is-open');
+          if (navToggle) {
+            navToggle.classList.remove('is-active');
+            navToggle.setAttribute('aria-expanded', 'false');
+          }
+          if (header) header.classList.remove('is-scrolled');
+
+          updateActiveNav(target.href);
+          if (push) history.pushState({ pjax: true }, '', target.href);
+
+          window.scrollTo(0, 0);
+          initPage();
+
+          if (target.hash) {
+            var targetId = decodeURIComponent(target.hash.slice(1));
+            var targetNode = doc.getElementById(targetId);
+            if (targetNode) targetNode.scrollIntoView();
+          }
+
+          if (doc.querySelector('.song-page') && window.CyreneMusic) {
+            window.CyreneMusic.pause();
+          }
+
+          body.classList.remove('is-pjaxing');
+          loading = false;
+        })
+        .catch(function () {
+          location.href = target.href;
+        });
+    }
+
+    on(doc, 'click', function (event) {
+      if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+
+      var link = event.target.closest ? event.target.closest('a') : null;
+      if (!link) return;
+      if (link.target && link.target !== '_self') return;
+      if (link.hasAttribute('download') || link.hasAttribute('data-no-pjax')) return;
+
+      var href = link.getAttribute('href');
+      if (!href || href.charAt(0) === '#') return;
+      if (href.indexOf('javascript:') === 0 || href.indexOf('mailto:') === 0) return;
+
+      var url;
+      try {
+        url = new URL(link.href, location.href);
+      } catch (error) {
+        return;
+      }
+      if (url.origin !== location.origin) return;
+      if (/\.(mp3|wav|ogg|m4a|lrc|json|xml|zip|pdf|jpe?g|png|webp|gif|svg)$/i.test(url.pathname)) return;
+      if (url.pathname === location.pathname && url.search === location.search) return;
+
+      event.preventDefault();
+      loadPage(url.href, true);
+    });
+
+    on(window, 'popstate', function () {
+      loadPage(location.href, false);
+    });
+  }
+
+  /* ---------- Init ---------- */
+  function init() {
+    initPage();
     setupSearchShortcut();
     makeStars();
     makePetals();
     setupCursorGlow();
     initCursorFX();
     initFXControls();
-    initCoverAnimation();
+    initMusicPlayer();
+    initPjax();
   }
 
   if (doc.readyState === 'loading') {

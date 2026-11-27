@@ -4181,6 +4181,25 @@ html[data-theme="dark"] .music-player {
   opacity: 0.72;
 }
 
+.music-link {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-width: 0;
+  color: inherit;
+  text-decoration: none;
+}
+
+.music-link:hover .music-title {
+  color: var(--accent);
+}
+
+.music-link:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 999px;
+}
+
 .music-disc {
   display: grid;
   place-items: center;
